@@ -1,0 +1,3 @@
+tipo(scope): descripción corta
+
+[opcional] descripción más detallada
