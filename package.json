@@ -1,0 +1,30 @@
+{
+  "name": "api-login-distribuidos",
+  "version": "1.0.0",
+  "description": "Sistema de login implementado como una API Rest",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fredylopez01/api-login-distribuidos.git"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "js",
+    "API"
+  ],
+  "author": "fredylopez01, santino33, davidrm_py",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fredylopez01/api-login-distribuidos/issues"
+  },
+  "homepage": "https://github.com/fredylopez01/api-login-distribuidos#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
