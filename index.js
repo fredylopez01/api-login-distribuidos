@@ -1,15 +1,15 @@
 /**
  * API de Login con Autenticación por Token
  * Servidor principal de la aplicación
- * 
+ *
  * @author fredylopez01, santino33, davidrm_py
  * @version 1.0.0
  */
 
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 // Importar rutas (pendientes de implementar)
 // const authRoutes = require('./src/routes/auth');
@@ -20,6 +20,9 @@ const rateLimit = require('express-rate-limit');
 // const logger = require('./src/middleware/logger');
 // const config = require('./src/config/config');
 
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV || "development"}`,
+});
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -27,22 +30,17 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 app.use(cors());
 
-// Rate limiting 
-const limiter = rateLimit({
-   
-});
+// Rate limiting
+const limiter = rateLimit({});
 app.use(limiter);
 
 // Middleware para parsing JSON
-
 
 // Middleware de logging (pendiente)
 // app.use(logger.logRequest);
 
 // Rutas principales
-app.get('/', (req, res) => {
-   
-});
+app.get("/", (req, res) => {});
 
 // TODO: Configurar rutas cuando estén implementadas
 // app.use('/api/auth', authRoutes);
@@ -50,18 +48,12 @@ app.get('/', (req, res) => {
 // app.use('/api/password', passwordRoutes);
 
 // Middleware de manejo de errores
-app.use((err, req, res, next) => {
-   
-});
+app.use((err, req, res, next) => {});
 
 // Ruta 404
-app.use('*', (req, res) => {
-    
-});
+app.use("*", (req, res) => {});
 
 // Iniciar servidor
-app.listen(PORT, () => {
-   
-});
+app.listen(PORT, () => {});
 
 module.exports = app;
