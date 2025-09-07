@@ -5,10 +5,10 @@
     "password": "$2b$10$1ZOMpH/RzWO1w0/4mWVQtOOgimKospil.rTbeW/8I6/pHYMPgqQ0W",
     "role": "user",
     "isActive": true,
-    "loginAttempts": 0,
+    "loginAttempts": 1,
     "lastLogin": null,
     "createdAt": "2025-09-07T18:22:15.707Z",
-    "updatedAt": "2025-09-07T18:22:15.707Z"
+    "updatedAt": "2025-09-07T22:31:47.022Z"
   },
   {
     "id": "68b141f7-2c6b-4c2d-aad8-7319b33d47f8",
@@ -20,5 +20,16 @@
     "lastLogin": null,
     "createdAt": "2025-09-07T20:13:28.844Z",
     "updatedAt": "2025-09-07T20:13:28.844Z"
+  },
+  {
+    "id": "13757a1a-adba-4770-8534-69a4534ceadf",
+    "email": "santino@test.com",
+    "password": "$2b$10$tHmlCed5tj1cgo3/pj9b1ud0LRuqpAgU5h5gQbImpLgynaCNvmtui",
+    "role": "user",
+    "isActive": false,
+    "loginAttempts": 5,
+    "lastLogin": "2025-09-07T22:46:29.158Z",
+    "createdAt": "2025-09-07T22:38:36.293Z",
+    "updatedAt": "2025-09-07T22:46:35.739Z"
   }
 ]

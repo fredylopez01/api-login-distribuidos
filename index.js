@@ -15,7 +15,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 // Importar rutas
-// const authRoutes = require('./src/routes/auth'); // Pendiente Naranjo
+const authRoutes = require('./src/routes/auth');
 const userRoutes = require('./src/routes/users');
 // const passwordRoutes = require('./src/routes/password'); // Pendiente David
 
@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
 });
 
 // Configurar rutas
-// app.use('/api/auth', authRoutes); // Pendiente Naranjo
+app.use('/api/auth', authRoutes); 
 app.use('/api/users', userRoutes);
 // app.use('/api/password', passwordRoutes); // Pendiente David
 
