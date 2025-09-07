@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": "0a37c205-dcc0-49b6-a08f-716dfc4e1230",
+    "email": "david@test.com",
+    "password": "$2b$10$1ZOMpH/RzWO1w0/4mWVQtOOgimKospil.rTbeW/8I6/pHYMPgqQ0W",
+    "role": "user",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": null,
+    "createdAt": "2025-09-07T18:22:15.707Z",
+    "updatedAt": "2025-09-07T18:22:15.707Z"
+  },
+  {
+    "id": "68b141f7-2c6b-4c2d-aad8-7319b33d47f8",
+    "email": "david@tes1t.com",
+    "password": "$2b$10$DenNbygJZMmwHeADq7FqzOfF.VwjPkVtNYI/S0TfTbkA0I4KF7GRi",
+    "role": "user",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": null,
+    "createdAt": "2025-09-07T20:13:28.844Z",
+    "updatedAt": "2025-09-07T20:13:28.844Z"
+  }
+]
