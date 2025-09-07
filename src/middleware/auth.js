@@ -19,14 +19,12 @@ function verifyToken(req, res, next) {
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ succes: false, message: "Token requerido" });
+    return res.status(401).json({ message: "Token requerido" });
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      return res
-        .status(403)
-        .json({ succes: false, message: "Token inválido o expirado" });
+      return res.status(403).json({ message: "Token inválido o expirado" });
     }
     req.user = user; // Guardamos el usuario en la request para usarlo en controladores
     next();
