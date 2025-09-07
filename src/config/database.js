@@ -4,13 +4,21 @@
  * Responsable: Fredy
  */
 
-// TODO: Definir rutas de archivos de datos
-// - Ruta de archivo de usuarios
-// - Ruta de archivo de tokens
-// - Ruta de archivo de logs
+const path = require('path');
 
 const dbConfig = {
-    // Configuración de persistencia
+    users: {
+        path: path.join(__dirname, '../../data/users.json'),
+        encoding: 'utf8'
+    },
+    resetTokens: {
+        path: path.join(__dirname, '../../data/reset_tokens.json'),
+        encoding: 'utf8'
+    },
+    logs: {
+        path: path.join(__dirname, '../../data/logs.json'),
+        encoding: 'utf8'
+    }
 };
 
 module.exports = dbConfig;

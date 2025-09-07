@@ -4,18 +4,15 @@
  * Responsable: David
  */
 
-const fs = require('fs').promises;
-const path = require('path');
-const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
+const { readUsers, writeUsers } = require('../services/fileService');
+const { hashPassword, comparePasswords } = require('../services/encryptionService');
 
 const userRoles = {
     ADMIN: 'admin',
     USER: 'user',
     MODERATOR: 'moderator'
 };
-
-const USERS_FILE = path.join(__dirname, '../../data/users.json');
 
 class User {
     constructor(userData) {
@@ -30,27 +27,9 @@ class User {
         this.updatedAt = new Date().toISOString();
     }
 
-    // Leer usuarios del archivo
-    static async readUsers() {
-        try {
-            const data = await fs.readFile(USERS_FILE, 'utf8');
-            return JSON.parse(data);
-        } catch (error) {
-            if (error.code === 'ENOENT') {
-                return [];
-            }
-            throw error;
-        }
-    }
-
-    // Escribir usuarios al archivo
-    static async writeUsers(users) {
-        await fs.writeFile(USERS_FILE, JSON.stringify(users, null, 2));
-    }
-
     // Crear nuevo usuario
     static async create(userData) {
-        const users = await User.readUsers();
+        const users = await readUsers();
         
         // Verificar si el email ya existe
         const existingUser = users.find(user => user.email === userData.email);
@@ -58,9 +37,8 @@ class User {
             throw new Error('El email ya está registrado');
         }
 
-        // Encriptar contraseña
-        const saltRounds = parseInt(process.env.BCRYPT_ROUNDS) || 10;
-        const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
+        // Encriptar contraseña usando el servicio
+        const hashedPassword = await hashPassword(userData.password);
 
         // Crear nuevo usuario
         const newUser = new User({
@@ -69,7 +47,7 @@ class User {
         });
 
         users.push(newUser);
-        await User.writeUsers(users);
+        await writeUsers(users);
 
         // Retornar usuario sin contraseña
         const { password, ...userWithoutPassword } = newUser;
@@ -78,29 +56,28 @@ class User {
 
     // Buscar usuario por email
     static async findByEmail(email) {
-        const users = await User.readUsers();
+        const users = await readUsers();
         return users.find(user => user.email === email);
     }
 
     // Buscar usuario por ID
     static async findById(id) {
-        const users = await User.readUsers();
+        const users = await readUsers();
         return users.find(user => user.id === id);
     }
 
     // Actualizar usuario
     static async update(id, updateData) {
-        const users = await User.readUsers();
+        const users = await readUsers();
         const userIndex = users.findIndex(user => user.id === id);
         
         if (userIndex === -1) {
             throw new Error('Usuario no encontrado');
         }
 
-        // Si se actualiza la contraseña, encriptarla
+        // Si se actualiza la contraseña, encriptarla usando el servicio
         if (updateData.password) {
-            const saltRounds = parseInt(process.env.BCRYPT_ROUNDS) || 10;
-            updateData.password = await bcrypt.hash(updateData.password, saltRounds);
+            updateData.password = await hashPassword(updateData.password);
         }
 
         users[userIndex] = {
@@ -109,7 +86,7 @@ class User {
             updatedAt: new Date().toISOString()
         };
 
-        await User.writeUsers(users);
+        await writeUsers(users);
         
         const { password, ...userWithoutPassword } = users[userIndex];
         return userWithoutPassword;
@@ -117,25 +94,25 @@ class User {
 
     // Eliminar usuario
     static async delete(id) {
-        const users = await User.readUsers();
+        const users = await readUsers();
         const filteredUsers = users.filter(user => user.id !== id);
         
         if (users.length === filteredUsers.length) {
             throw new Error('Usuario no encontrado');
         }
 
-        await User.writeUsers(filteredUsers);
+        await writeUsers(filteredUsers);
         return true;
     }
 
-    // Verificar contraseña
+    // Verificar contraseña usando el servicio de encriptación
     static async verifyPassword(plainPassword, hashedPassword) {
-        return await bcrypt.compare(plainPassword, hashedPassword);
+        return await comparePasswords(plainPassword, hashedPassword);
     }
 
     // Incrementar intentos de login
     static async incrementLoginAttempts(email) {
-        const users = await User.readUsers();
+        const users = await readUsers();
         const userIndex = users.findIndex(user => user.email === email);
         
         if (userIndex !== -1) {
@@ -147,26 +124,26 @@ class User {
                 users[userIndex].isActive = false;
             }
             
-            await User.writeUsers(users);
+            await writeUsers(users);
         }
     }
 
     // Resetear intentos de login
     static async resetLoginAttempts(email) {
-        const users = await User.readUsers();
+        const users = await readUsers();
         const userIndex = users.findIndex(user => user.email === email);
         
         if (userIndex !== -1) {
             users[userIndex].loginAttempts = 0;
             users[userIndex].lastLogin = new Date().toISOString();
             users[userIndex].updatedAt = new Date().toISOString();
-            await User.writeUsers(users);
+            await writeUsers(users);
         }
     }
 
     // Obtener usuarios por rol
     static async getUsersByRole(role) {
-        const users = await User.readUsers();
+        const users = await readUsers();
         return users
             .filter(user => user.role === role)
             .map(({ password, ...userWithoutPassword }) => userWithoutPassword);
@@ -174,7 +151,7 @@ class User {
 
     // Obtener todos los usuarios (sin contraseñas)
     static async getAll() {
-        const users = await User.readUsers();
+        const users = await readUsers();
         return users.map(({ password, ...userWithoutPassword }) => userWithoutPassword);
     }
 }
