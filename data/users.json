@@ -46,5 +46,17 @@
     "createdAt": "2025-09-07T21:58:46.205Z",
     "updatedAt": "2025-09-08T00:30:30.524Z",
     "lockUntil": "2025-09-08T00:45:30.527Z"
+  },
+  {
+    "id": "554045dc-5248-4b5f-af5f-e72d8231989f",
+    "email": "fredy.lopez04@uptc.edu.co",
+    "password": "$2b$10$5XayosEkROrwiEXnuBcXJOGtnRD8PkZlBtifVWdGbYEZBLAT7vO0C",
+    "role": "admin",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": "2025-09-08T02:13:02.771Z",
+    "createdAt": "2025-09-08T02:06:42.022Z",
+    "updatedAt": "2025-09-08T02:13:02.771Z",
+    "lockUntil": null
   }
 ]
