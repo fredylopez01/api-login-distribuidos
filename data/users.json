@@ -46,5 +46,17 @@
     "createdAt": "2025-09-07T21:58:46.205Z",
     "updatedAt": "2025-09-08T00:30:30.524Z",
     "lockUntil": "2025-09-08T00:45:30.527Z"
+  },
+  {
+    "id": "6b42e34a-8d9f-4749-bd0b-2ead7b2b243f",
+    "email": "santino1@ejemplo.com",
+    "password": "$2b$10$XQbyib15ojnJAf3DH2WOiuVhi7VE4/EtZ2fa516yRRx4yJ3q9qbTi",
+    "role": "user",
+    "isActive": true,
+    "loginAttempts": 2,
+    "lastLogin": null,
+    "createdAt": "2025-09-08T03:07:23.001Z",
+    "updatedAt": "2025-09-08T03:12:26.221Z",
+    "lockUntil": null
   }
 ]
