@@ -15,14 +15,16 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./docs/swagger-output.json");
 
 // Importar rutas
-const authRoutes = require('./src/routes/auth');
-const userRoutes = require('./src/routes/users');
-const passwordRoutes = require('./src/routes/password');
+const authRoutes = require("./src/routes/auth");
+const userRoutes = require("./src/routes/users");
+const passwordRoutes = require("./src/routes/password");
 
 // Importar servicios
-const { verifyConnection } = require('./src/services/emailService');
+const { verifyConnection } = require("./src/services/emailService");
 
 // Importar middleware (pendientes de implementar)
 const logger = require('./src/middleware/logger');
@@ -66,10 +68,12 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 // Configurar rutas
-app.use('/api/auth', authRoutes); 
-app.use('/api/users', userRoutes);
-app.use('/api/password', passwordRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/password", passwordRoutes);
 
 // Middleware de manejo de errores
 app.use((err, req, res, next) => {
@@ -96,14 +100,14 @@ app.use((req, res) => {
 
 // Iniciar servidor
 app.listen(PORT, async () => {
-    console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-    console.log(`📍 URL: http://localhost:${PORT}`);
-    console.log(`🔧 Modo: ${process.env.NODE_ENV || 'development'}`);
-    console.log('📝 API de Login lista para recibir requests');
-    
-    // Verificar conexión de email
-    console.log('📧 Verificando servicio de email...');
-    await verifyConnection();
+  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
+  console.log(`📍 URL: http://localhost:${PORT}`);
+  console.log(`🔧 Modo: ${process.env.NODE_ENV || "development"}`);
+  console.log("📝 API de Login lista para recibir requests");
+
+  // Verificar conexión de email
+  console.log("📧 Verificando servicio de email...");
+  await verifyConnection();
 });
 
 module.exports = app;
