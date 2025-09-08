@@ -110,6 +110,40 @@ class User {
         return await comparePasswords(plainPassword, hashedPassword);
     }
 
+    // Verificar contraseña temporal (token de reseteo)
+    static async verifyTemporaryPassword(email, temporaryPassword) {
+        const { readResetTokens, writeResetTokens } = require('../services/fileService');
+        
+        try {
+            const resetTokens = await readResetTokens();
+            const tokenRecord = resetTokens.find(t => 
+                t.token === temporaryPassword && 
+                t.email === email && 
+                !t.used
+            );
+
+            if (!tokenRecord) {
+                return { valid: false, reason: 'Token inválido' };
+            }
+
+            // Verificar expiración
+            if (new Date() > new Date(tokenRecord.expiresAt)) {
+                return { valid: false, reason: 'Token expirado' };
+            }
+
+            // Marcar token como usado para login temporal
+            const updatedTokens = resetTokens.map(t => 
+                t.token === temporaryPassword ? { ...t, used: true, usedAt: new Date().toISOString(), usedFor: 'login' } : t
+            );
+            await writeResetTokens(updatedTokens);
+
+            return { valid: true, requiresPasswordChange: true };
+        } catch (error) {
+            console.error('Error verificando contraseña temporal:', error);
+            return { valid: false, reason: 'Error interno' };
+        }
+    }
+
     // Incrementar intentos de login
     static async incrementLoginAttempts(email) {
         const users = await readUsers();

@@ -17,7 +17,10 @@ const rateLimit = require('express-rate-limit');
 // Importar rutas
 const authRoutes = require('./src/routes/auth');
 const userRoutes = require('./src/routes/users');
-// const passwordRoutes = require('./src/routes/password'); // Pendiente David
+const passwordRoutes = require('./src/routes/password');
+
+// Importar servicios
+const { verifyConnection } = require('./src/services/emailService');
 
 // Importar middleware (pendientes de implementar)
 // const logger = require('./src/middleware/logger');
@@ -65,7 +68,7 @@ app.get('/', (req, res) => {
 // Configurar rutas
 app.use('/api/auth', authRoutes); 
 app.use('/api/users', userRoutes);
-// app.use('/api/password', passwordRoutes); // Pendiente David
+app.use('/api/password', passwordRoutes);
 
 // Middleware de manejo de errores
 app.use((err, req, res, next) => {
@@ -88,11 +91,15 @@ app.use((req, res) => {
 });
 
 // Iniciar servidor
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
     console.log(`📍 URL: http://localhost:${PORT}`);
     console.log(`🔧 Modo: ${process.env.NODE_ENV || 'development'}`);
     console.log('📝 API de Login lista para recibir requests');
+    
+    // Verificar conexión de email
+    console.log('📧 Verificando servicio de email...');
+    await verifyConnection();
 });
 
 module.exports = app;
