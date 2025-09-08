@@ -8,7 +8,8 @@
     "loginAttempts": 1,
     "lastLogin": null,
     "createdAt": "2025-09-07T18:22:15.707Z",
-    "updatedAt": "2025-09-07T22:31:47.022Z"
+    "updatedAt": "2025-09-07T22:31:47.022Z",
+    "lockUntil": null
   },
   {
     "id": "68b141f7-2c6b-4c2d-aad8-7319b33d47f8",
@@ -19,7 +20,8 @@
     "loginAttempts": 0,
     "lastLogin": null,
     "createdAt": "2025-09-07T20:13:28.844Z",
-    "updatedAt": "2025-09-07T20:13:28.844Z"
+    "updatedAt": "2025-09-07T20:13:28.844Z",
+    "lockUntil": null
   },
   {
     "id": "13757a1a-adba-4770-8534-69a4534ceadf",
@@ -30,6 +32,19 @@
     "loginAttempts": 5,
     "lastLogin": "2025-09-07T22:46:29.158Z",
     "createdAt": "2025-09-07T22:38:36.293Z",
-    "updatedAt": "2025-09-07T22:46:35.739Z"
+    "updatedAt": "2025-09-07T22:46:35.739Z",
+    "lockUntil": null
+  },
+  {
+    "id": "e916e748-27d8-4cdf-afa7-8630d27c6e2b",
+    "email": "fredy@example.com",
+    "password": "$2b$10$Lia0FezWstImQNKGeBlgYOAULmSwleD.6c/0mwSzWuxg8gwjHze0.",
+    "role": "admin",
+    "isActive": true,
+    "loginAttempts": 15,
+    "lastLogin": "2025-09-08T00:24:36.155Z",
+    "createdAt": "2025-09-07T21:58:46.205Z",
+    "updatedAt": "2025-09-08T00:30:30.524Z",
+    "lockUntil": "2025-09-08T00:45:30.527Z"
   }
 ]
