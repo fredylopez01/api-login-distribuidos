@@ -1,18 +1,20 @@
 /**
  * API de Login con Autenticación por Token
  * Servidor principal de la aplicación
- * 
+ *
  * @author fredylopez01, santino33, davidrm_py
  * @version 1.0.0
  */
 
 // Cargar variables de entorno
-require('dotenv').config();
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV || "development"}`,
+});
 
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 // Importar rutas
 const authRoutes = require('./src/routes/auth');
@@ -35,34 +37,33 @@ app.use(cors());
 
 // Rate limiting - máximo 100 requests por 15 minutos
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutos
-    max: 100,
-    message: 'Demasiadas solicitudes desde esta IP, intenta de nuevo más tarde.'
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 100,
+  message: "Demasiadas solicitudes desde esta IP, intenta de nuevo más tarde.",
 });
 app.use(limiter);
 
 // Middleware para parsing JSON
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
-
 
 // Middleware de logging (pendiente)
 // app.use(logger.logRequest);
 
 // Rutas principales
-app.get('/', (req, res) => {
-    res.json({
-        message: 'API de Login con Autenticación por Token activa',
-        data: {
-            version: '1.0.0',
-            status: 'active',
-            endpoints: {
-                auth: '/api/auth',
-                users: '/api/users',
-                password: '/api/password'
-            }
-        }
-    });
+app.get("/", (req, res) => {
+  res.json({
+    message: "API de Login con Autenticación por Token activa",
+    data: {
+      version: "1.0.0",
+      status: "active",
+      endpoints: {
+        auth: "/api/auth",
+        users: "/api/users",
+        password: "/api/password",
+      },
+    },
+  });
 });
 
 // Configurar rutas
@@ -72,22 +73,25 @@ app.use('/api/password', passwordRoutes);
 
 // Middleware de manejo de errores
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({
-        message: 'Error interno del servidor',
-        data: process.env.NODE_ENV === 'development' ? { error: err.message, stack: err.stack } : null
-    });
+  console.error(err.stack);
+  res.status(500).json({
+    message: "Error interno del servidor",
+    data:
+      process.env.NODE_ENV === "development"
+        ? { error: err.message, stack: err.stack }
+        : null,
+  });
 });
 
 // Ruta 404 - debe ir al final
 app.use((req, res) => {
-    res.status(404).json({
-        message: `La ruta ${req.originalUrl} no existe`,
-        data: {
-            method: req.method,
-            url: req.originalUrl
-        }
-    });
+  res.status(404).json({
+    message: `La ruta ${req.originalUrl} no existe`,
+    data: {
+      method: req.method,
+      url: req.originalUrl,
+    },
+  });
 });
 
 // Iniciar servidor
