@@ -6,6 +6,7 @@
 
 const { User, userRoles } = require('../models/User');
 const { sanitizeInput } = require('../utils/validators');
+const { sendWelcomeEmail } = require('../services/emailService');
 
 /**
  * Registrar nuevo usuario
@@ -24,6 +25,11 @@ const register = async (req, res) => {
             password: password,
             role: userRole
         });
+        
+        // Enviar correo de bienvenida (no bloquear si falla)
+        sendWelcomeEmail(sanitizedEmail, 'Usuario')
+            .then(() => console.log('✅ Correo de bienvenida enviado'))
+            .catch(error => console.error('⚠️ Error al enviar correo de bienvenida:', error.message));
         
         res.status(201).json({
             message: 'Usuario registrado exitosamente',
