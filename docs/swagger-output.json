@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "host": "localhost:3000",
-  "basePath": "/",
+  "basePath": "/api",
   "schemes": ["http"],
   "tags": [
     { "name": "Auth", "description": "Autenticación y manejo de sesiones" },
@@ -39,16 +39,8 @@
               "type": "object",
               "required": ["email", "password"],
               "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "user@example.com",
-                  "description": "Correo electrónico del usuario"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "mypassword123",
-                  "description": "Contraseña en texto plano"
-                }
+                "email": { "type": "string", "example": "user@example.com" },
+                "password": { "type": "string", "example": "mypassword123" }
               }
             }
           }
@@ -64,6 +56,7 @@
               }
             }
           },
+          "400": { "description": "Datos de login inválidos" },
           "401": { "description": "Credenciales inválidas" },
           "500": { "description": "Error interno del servidor" }
         }
@@ -102,19 +95,16 @@
       "get": {
         "tags": ["Users"],
         "summary": "Obtener perfil de usuario",
-        "description": "Devuelve la información del usuario autenticado.",
         "security": [{ "bearerAuth": [] }],
         "responses": {
           "200": { "description": "Perfil obtenido correctamente" },
-          "401": { "description": "No autorizado" },
-          "403": { "description": "Prohibido" },
+          "401": { "description": "No autenticado" },
           "404": { "description": "Usuario no encontrado" }
         }
       },
       "put": {
         "tags": ["Users"],
         "summary": "Actualizar perfil de usuario",
-        "description": "Permite actualizar la información de un usuario autenticado.",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
@@ -133,20 +123,17 @@
         "responses": {
           "200": { "description": "Perfil actualizado correctamente" },
           "400": { "description": "Datos inválidos" },
-          "401": { "description": "No autorizado" },
-          "403": { "description": "Prohibido" },
+          "401": { "description": "No autenticado" },
           "404": { "description": "Usuario no encontrado" }
         }
       },
       "delete": {
         "tags": ["Users"],
-        "summary": "Eliminar usuario actual",
-        "description": "Elimina el usuario autenticado del sistema.",
+        "summary": "Eliminar usuario autenticado",
         "security": [{ "bearerAuth": [] }],
         "responses": {
           "200": { "description": "Usuario eliminado correctamente" },
-          "401": { "description": "No autorizado" },
-          "403": { "description": "Prohibido" },
+          "401": { "description": "No autenticado" },
           "404": { "description": "Usuario no encontrado" }
         }
       }
@@ -154,8 +141,7 @@
     "/users/{id}": {
       "delete": {
         "tags": ["Users"],
-        "summary": "Eliminar usuario por ID",
-        "description": "Elimina un usuario específico por ID.",
+        "summary": "Eliminar usuario por ID (solo admin)",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
@@ -168,30 +154,28 @@
         ],
         "responses": {
           "200": { "description": "Usuario eliminado correctamente" },
-          "401": { "description": "No autorizado" },
-          "403": { "description": "Prohibido" },
+          "401": { "description": "No autenticado" },
+          "403": { "description": "Prohibido (requiere rol admin)" },
           "404": { "description": "Usuario no encontrado" }
         }
       }
     },
-    "/users/": {
+    "/users": {
       "get": {
         "tags": ["Users"],
-        "summary": "Listar usuarios",
-        "description": "Obtiene la lista completa de usuarios.",
+        "summary": "Listar todos los usuarios (solo admin)",
         "security": [{ "bearerAuth": [] }],
         "responses": {
           "200": { "description": "Lista de usuarios obtenida correctamente" },
-          "401": { "description": "No autorizado" },
-          "403": { "description": "Prohibido" }
+          "401": { "description": "No autenticado" },
+          "403": { "description": "Prohibido (requiere rol admin)" }
         }
       }
     },
     "/users/role/{role}": {
       "get": {
         "tags": ["Users"],
-        "summary": "Listar usuarios por rol",
-        "description": "Obtiene la lista de usuarios con un rol específico.",
+        "summary": "Listar usuarios por rol (solo admin)",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
@@ -199,22 +183,21 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Rol del usuario (ej. admin, user)"
+            "description": "Rol de usuario (ej. admin, user)"
           }
         ],
         "responses": {
           "200": { "description": "Usuarios obtenidos correctamente" },
           "400": { "description": "Rol inválido" },
-          "401": { "description": "No autorizado" },
-          "403": { "description": "Prohibido" }
+          "401": { "description": "No autenticado" },
+          "403": { "description": "Prohibido (requiere rol admin)" }
         }
       }
     },
     "/password/forgot-password": {
       "post": {
         "tags": ["Password"],
-        "summary": "Olvidé mi contraseña",
-        "description": "Envía un correo con el enlace para restablecer la contraseña.",
+        "summary": "Solicitar recuperación de contraseña",
         "parameters": [
           {
             "in": "body",
@@ -229,16 +212,18 @@
           }
         ],
         "responses": {
-          "200": { "description": "Correo enviado exitosamente" },
-          "400": { "description": "Datos inválidos" }
+          "200": {
+            "description": "Si el email existe, se envía correo de recuperación"
+          },
+          "400": { "description": "Datos inválidos" },
+          "500": { "description": "Error al enviar el correo" }
         }
       }
     },
     "/password/reset-password": {
       "post": {
         "tags": ["Password"],
-        "summary": "Restablecer contraseña",
-        "description": "Permite restablecer la contraseña con un token válido.",
+        "summary": "Restablecer contraseña con token",
         "parameters": [
           {
             "in": "body",
@@ -249,26 +234,23 @@
               "properties": {
                 "email": { "type": "string", "example": "user@example.com" },
                 "token": { "type": "string", "example": "abc123token" },
-                "newPassword": {
-                  "type": "string",
-                  "example": "newStrongPass456"
-                }
+                "newPassword": { "type": "string", "example": "NewPass123!" }
               }
             }
           }
         ],
         "responses": {
           "200": { "description": "Contraseña restablecida correctamente" },
-          "400": { "description": "Datos inválidos" },
-          "404": { "description": "Usuario o token no válido" }
+          "400": { "description": "Token inválido o expirado" },
+          "404": { "description": "Usuario no encontrado" },
+          "500": { "description": "Error interno del servidor" }
         }
       }
     },
     "/password/change-password": {
       "post": {
         "tags": ["Password"],
-        "summary": "Cambiar contraseña",
-        "description": "Permite a un usuario autenticado cambiar su contraseña.",
+        "summary": "Cambiar contraseña (requiere login)",
         "security": [{ "bearerAuth": [] }],
         "parameters": [
           {
@@ -282,16 +264,18 @@
                   "type": "string",
                   "example": "oldPass123"
                 },
-                "newPassword": { "type": "string", "example": "newPass456" }
+                "newPassword": { "type": "string", "example": "NewPass123!" }
               }
             }
           }
         ],
         "responses": {
           "200": { "description": "Contraseña cambiada correctamente" },
-          "400": { "description": "Datos inválidos" },
-          "401": { "description": "No autorizado" },
-          "403": { "description": "Prohibido" }
+          "400": {
+            "description": "Datos inválidos o contraseña actual incorrecta"
+          },
+          "401": { "description": "No autenticado" },
+          "500": { "description": "Error interno del servidor" }
         }
       }
     },
@@ -299,7 +283,6 @@
       "post": {
         "tags": ["Password"],
         "summary": "Validar token de recuperación",
-        "description": "Valida si un token de recuperación de contraseña es válido para el usuario.",
         "parameters": [
           {
             "in": "body",
@@ -316,7 +299,7 @@
         ],
         "responses": {
           "200": { "description": "Token válido" },
-          "400": { "description": "Datos inválidos" },
+          "400": { "description": "Token inválido o expirado" },
           "500": { "description": "Error interno del servidor" }
         }
       }

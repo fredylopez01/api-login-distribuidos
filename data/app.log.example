@@ -1,0 +1,86 @@
+[2025-09-08T19:48:26.977Z] REQUEST - POST /api/auth/login
+[2025-09-08T19:49:48.141Z] REQUEST - POST /api/auth/logi
+[2025-09-08T20:09:35.203Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:09:35.331Z] USER_ACTION -   LOGIN_SUCCESS fredy.lopez04@uptc.edu.co Usuario inició sesión
+[2025-09-08T20:13:12.445Z] REQUEST - GET /docs
+[2025-09-08T20:13:12.587Z] REQUEST - GET /.well-known/appspecific/com.chrome.devtools.json
+[2025-09-08T20:13:12.641Z] REQUEST - GET /favicon.ico
+[2025-09-08T20:13:37.736Z] REQUEST - GET /api/docs/
+[2025-09-08T20:13:37.771Z] REQUEST - GET /api/docs/swagger-ui.css
+[2025-09-08T20:13:37.778Z] REQUEST - GET /api/docs/swagger-ui-bundle.js
+[2025-09-08T20:13:37.781Z] REQUEST - GET /api/docs/swagger-ui-standalone-preset.js
+[2025-09-08T20:13:37.783Z] REQUEST - GET /api/docs/swagger-ui-init.js
+[2025-09-08T20:14:23.929Z] REQUEST - GET /users/profile
+[2025-09-08T20:19:20.671Z] REQUEST - GET /api/users/profile
+[2025-09-08T20:20:29.032Z] REQUEST - GET /api/users/profile
+[2025-09-08T20:20:41.745Z] REQUEST - GET /api/users/profile
+[2025-09-08T20:20:44.669Z] REQUEST - GET /api/users/profile
+[2025-09-08T20:20:50.324Z] REQUEST - GET /users/profile
+[2025-09-08T20:43:47.028Z] REQUEST - GET /
+[2025-09-08T20:44:56.134Z] REQUEST - GET /
+[2025-09-08T20:45:39.036Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:45:39.156Z] USER_ACTION -   LOGIN_SUCCESS fredy.lopez04@uptc.edu.co Usuario inició sesión
+[2025-09-08T20:45:45.401Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:45:45.519Z] USER_ACTION -   LOGIN_FAILED  Intento fallido con email: fredy.lopez04@uptc.edu.co
+[2025-09-08T20:45:58.144Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:45:58.250Z] USER_ACTION -   LOGIN_FAILED  Intento fallido con email: fredy.lopez04@uptc.edu.co
+[2025-09-08T20:45:59.742Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:45:59.846Z] USER_ACTION -   LOGIN_FAILED  Intento fallido con email: fredy.lopez04@uptc.edu.co
+[2025-09-08T20:46:01.624Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:46:01.735Z] USER_ACTION -   LOGIN_FAILED  Intento fallido con email: fredy.lopez04@uptc.edu.co
+[2025-09-08T20:46:03.435Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:46:03.587Z] USER_ACTION -   LOGIN_FAILED  Intento fallido con email: fredy.lopez04@uptc.edu.co
+[2025-09-08T20:46:05.213Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:46:05.332Z] USER_ACTION -   LOGIN_FAILED  Intento fallido con email: fredy.lopez04@uptc.edu.co
+[2025-09-08T20:46:14.811Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:46:14.947Z] USER_ACTION -   LOGIN_FAILED  Intento fallido con email: fredy.lopez04@uptc.edu.co
+[2025-09-08T20:47:40.838Z] REQUEST - POST /api/users/register
+[2025-09-08T20:55:02.887Z] REQUEST - POST /api/users/register
+[2025-09-08T20:55:21.690Z] REQUEST - POST /api/users/register
+[2025-09-08T20:55:21.861Z] USER_ACTION -   REGISTER 957e3e1a-3ccc-473a-a3fb-d39eb4105d5e Usuario registrado exitosamente
+[2025-09-08T20:55:24.457Z] USER_ACTION -   REGISTER-CONFIRMATION 957e3e1a-3ccc-473a-a3fb-d39eb4105d5e Correo de bienvenida enviado
+[2025-09-08T20:57:14.459Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:57:14.508Z] USER_ACTION -   LOGIN_FAILED  Intento fallido con email: fredy.lopez04@uptc.edu.co
+[2025-09-08T20:57:58.830Z] REQUEST - POST /api/auth/login
+[2025-09-08T20:57:58.959Z] USER_ACTION -   LOGIN_SUCCESS fl8333317@gmail.com Usuario inició sesión
+[2025-09-08T21:00:39.115Z] REQUEST - GET /api/users/profile
+[2025-09-08T21:02:31.579Z] REQUEST - PUT /api/users/profile
+[2025-09-08T21:02:31.600Z] USER_ACTION -   PROFILE_UPDATE 957e3e1a-3ccc-473a-a3fb-d39eb4105d5e Usuario actualizó su perfil
+[2025-09-08T21:03:12.405Z] REQUEST - DELETE /api/users/profile
+[2025-09-08T21:03:12.418Z] USER_ACTION -   DELETE_USER 957e3e1a-3ccc-473a-a3fb-d39eb4105d5e Usuario 957e3e1a-3ccc-473a-a3fb-d39eb4105d5e eliminó cuenta 957e3e1a-3ccc-473a-a3fb-d39eb4105d5e
+[2025-09-08T21:03:18.921Z] REQUEST - GET /api/users/profile
+[2025-09-08T21:03:53.426Z] REQUEST - POST /api/users/register
+[2025-09-08T21:03:53.595Z] USER_ACTION -   REGISTER cd3ef16c-a38d-447f-9f4c-802ce6df7bfc Usuario registrado exitosamente
+[2025-09-08T21:03:56.553Z] USER_ACTION -   REGISTER-CONFIRMATION cd3ef16c-a38d-447f-9f4c-802ce6df7bfc Correo de bienvenida enviado
+[2025-09-08T21:04:52.060Z] REQUEST - POST /api/auth/login
+[2025-09-08T21:04:52.179Z] USER_ACTION -   LOGIN_SUCCESS fl8333317@gmail.com Usuario inició sesión
+[2025-09-08T21:05:37.662Z] REQUEST - GET /api/users/
+[2025-09-08T21:06:37.795Z] REQUEST - GET /api/users/
+[2025-09-08T21:07:15.677Z] REQUEST - GET /api/users/
+[2025-09-08T21:08:59.410Z] REQUEST - GET /api/users/
+[2025-09-08T21:09:23.172Z] REQUEST - GET /api/users/
+[2025-09-08T21:09:36.497Z] REQUEST - GET /api/users/
+[2025-09-08T21:09:36.513Z] USER_ACTION -   ADMIN_QUERY cd3ef16c-a38d-447f-9f4c-802ce6df7bfc Consultó usuarios con rol admin
+[2025-09-08T21:10:54.722Z] REQUEST - GET /api/users/
+[2025-09-08T21:13:49.233Z] REQUEST - GET /api/users/
+[2025-09-08T21:13:49.246Z] USER_ACTION -   ADMIN_QUERY cd3ef16c-a38d-447f-9f4c-802ce6df7bfc Consultó usuarios con rol admin
+[2025-09-08T21:14:10.336Z] REQUEST - GET /api/users/admin
+[2025-09-08T21:14:21.189Z] REQUEST - GET /api/users/role/admin
+[2025-09-08T21:17:23.147Z] REQUEST - GET /api/users/role/admin
+[2025-09-08T21:20:07.868Z] REQUEST - GET /api/users/role/admin
+[2025-09-08T21:22:03.734Z] REQUEST - GET /api/users/role/admin
+[2025-09-08T21:22:54.962Z] REQUEST - GET /api/users/role/admin
+[2025-09-08T21:26:02.499Z] REQUEST - GET /api/users/role/admin
+[2025-09-08T21:26:02.520Z] USER_ACTION -   ADMIN_QUERY cd3ef16c-a38d-447f-9f4c-802ce6df7bfc Consultó usuarios con rol admin
+[2025-09-08T21:28:09.318Z] REQUEST - POST /api/password/forgot-password
+[2025-09-08T21:28:09.332Z] USER_ACTION -   PASSWORD_RESET_REQUEST cd3ef16c-a38d-447f-9f4c-802ce6df7bfc Solicitud de recuperación de contraseña
+[2025-09-08T21:29:09.986Z] REQUEST - POST /api/password/validate-token
+[2025-09-08T21:29:48.438Z] REQUEST - POST /api/password/validate-token
+[2025-09-08T21:30:24.024Z] REQUEST - POST /api/password/reset-password
+[2025-09-08T21:30:24.141Z] USER_ACTION -   PASSWORD_RESET cd3ef16c-a38d-447f-9f4c-802ce6df7bfc Contraseña restablecida con token
+[2025-09-08T21:30:57.581Z] REQUEST - POST /api/auth/login
+[2025-09-08T21:30:57.702Z] USER_ACTION -   LOGIN_SUCCESS fl8333317@gmail.com Usuario inició sesión
+[2025-09-08T21:32:30.149Z] REQUEST - POST /api/password/change-password
+[2025-09-08T21:32:50.749Z] REQUEST - POST /api/password/change-password
+[2025-09-08T21:32:50.961Z] USER_ACTION -   PASSWORD_CHANGE cd3ef16c-a38d-447f-9f4c-802ce6df7bfc Usuario cambió su contraseña
+[2025-09-08T21:59:44.640Z] REQUEST - POST /auth/login
