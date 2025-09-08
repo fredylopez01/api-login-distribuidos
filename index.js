@@ -27,7 +27,7 @@ const passwordRoutes = require("./src/routes/password");
 const { verifyConnection } = require("./src/services/emailService");
 
 // Importar middleware (pendientes de implementar)
-// const logger = require('./src/middleware/logger');
+const logger = require('./src/middleware/logger');
 // const config = require('./src/config/config');
 
 const app = express();
@@ -49,8 +49,8 @@ app.use(limiter);
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware de logging (pendiente)
-// app.use(logger.logRequest);
+// Middleware de logging
+app.use(logger.logRequest);
 
 // Rutas principales
 app.get("/", (req, res) => {

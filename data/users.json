@@ -48,6 +48,18 @@
     "lockUntil": "2025-09-08T00:45:30.527Z"
   },
   {
+    "id": "6b42e34a-8d9f-4749-bd0b-2ead7b2b243f",
+    "email": "santino1@ejemplo.com",
+    "password": "$2b$10$XQbyib15ojnJAf3DH2WOiuVhi7VE4/EtZ2fa516yRRx4yJ3q9qbTi",
+    "role": "user",
+    "isActive": true,
+    "loginAttempts": 2,
+    "lastLogin": null,
+    "createdAt": "2025-09-08T03:07:23.001Z",
+    "updatedAt": "2025-09-08T03:12:26.221Z",
+    "lockUntil": null
+  }.
+  {
     "id": "554045dc-5248-4b5f-af5f-e72d8231989f",
     "email": "fredy.lopez04@uptc.edu.co",
     "password": "$2b$10$5XayosEkROrwiEXnuBcXJOGtnRD8PkZlBtifVWdGbYEZBLAT7vO0C",
