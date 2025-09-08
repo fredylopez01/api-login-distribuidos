@@ -1,9 +1,3 @@
-/**
- * Modelo de Usuario
- * Define la estructura y operaciones de usuarios
- * Responsable: David
- */
-
 const { v4: uuidv4 } = require("uuid");
 const { readUsers, writeUsers } = require("../services/fileService");
 const {
@@ -100,7 +94,7 @@ class User {
   static async delete(id) {
     const users = await readUsers();
     const filteredUsers = users.filter((user) => user.id !== id);
-    
+
     if (users.length === filteredUsers.length) {
       throw new Error("Usuario no encontrado");
     }
@@ -111,36 +105,48 @@ class User {
 
   // Verificar contraseña temporal (token de reseteo)
   static async verifyTemporaryPassword(email, temporaryPassword) {
-      const { readResetTokens, writeResetTokens } = require('../services/fileService');
+    const {
+      readResetTokens,
+      writeResetTokens,
+    } = require("../services/fileService");
 
-      try {
-          const resetTokens = await readResetTokens();
-          const tokenRecord = resetTokens.find(t => 
-              t.token === temporaryPassword && 
-              t.email === email && 
-              !t.used
-          );
+    try {
+      const resetTokens = await readResetTokens();
+      const tokenRecord = resetTokens.find(
+        (t) => t.token === temporaryPassword && t.email === email && !t.used
+      );
 
-          if (!tokenRecord) {
-              return { valid: false, reason: 'Token inválido' };
-          }
-
-          // Verificar expiración
-          if (new Date() > new Date(tokenRecord.expiresAt)) {
-              return { valid: false, reason: 'Token expirado' };
-          }
-
-          // Marcar token como usado para login temporal
-          const updatedTokens = resetTokens.map(t => 
-              t.token === temporaryPassword ? { ...t, used: true, usedAt: new Date().toISOString(), usedFor: 'login' } : t
-          );
-          await writeResetTokens(updatedTokens);
-
-          return { valid: true, requiresPasswordChange: true };
-      } catch (error) {
-          console.error('Error verificando contraseña temporal:', error);
-          return { valid: false, reason: 'Error interno' };
+      if (!tokenRecord) {
+        return { valid: false, reason: "Token inválido" };
       }
+
+      // Verificar expiración
+      if (new Date() > new Date(tokenRecord.expiresAt)) {
+        return { valid: false, reason: "Token expirado" };
+      }
+
+      // Marcar token como usado para login temporal
+      const updatedTokens = resetTokens.map((t) =>
+        t.token === temporaryPassword
+          ? {
+              ...t,
+              used: true,
+              usedAt: new Date().toISOString(),
+              usedFor: "login",
+            }
+          : t
+      );
+      await writeResetTokens(updatedTokens);
+
+      return { valid: true, requiresPasswordChange: true };
+    } catch (error) {
+      await logError(
+        "POST-RESET-PASSWORD",
+        null,
+        `Error verificando contraseña: ${error.message}`
+      );
+      return { valid: false, reason: "Error interno" };
+    }
   }
 
   // Verificar contraseña usando el servicio de encriptación

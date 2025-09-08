@@ -65,10 +65,34 @@
     "password": "$2b$10$5XayosEkROrwiEXnuBcXJOGtnRD8PkZlBtifVWdGbYEZBLAT7vO0C",
     "role": "admin",
     "isActive": true,
-    "loginAttempts": 0,
-    "lastLogin": "2025-09-08T02:13:02.771Z",
+    "loginAttempts": 6,
+    "lastLogin": "2025-09-08T20:45:39.144Z",
     "createdAt": "2025-09-08T02:06:42.022Z",
-    "updatedAt": "2025-09-08T02:13:02.771Z",
+    "updatedAt": "2025-09-08T20:46:05.319Z",
+    "lockUntil": "2025-09-08T21:01:05.329Z"
+  },
+  {
+    "id": "703abdbe-06d0-4a4c-bcf7-3be2bb02393c",
+    "email": "lopezdaza@gmail.com",
+    "password": "$2b$10$rkj5qusuHhvdIwWDk9uSN.53lwt9LWFochp/7Od0v4n/VUrvCWdR2",
+    "role": "admin",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": null,
+    "createdAt": "2025-09-08T20:47:40.953Z",
+    "updatedAt": "2025-09-08T20:47:40.953Z",
+    "lockUntil": null
+  },
+  {
+    "id": "cd3ef16c-a38d-447f-9f4c-802ce6df7bfc",
+    "email": "fl8333317@gmail.com",
+    "password": "$2b$10$bzMk1TavhL7AakWoXupsteZiL2JEPMxHOsPnQ2zzUE1GNdEVNPb/q",
+    "role": "admin",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": "2025-09-08T22:05:17.449Z",
+    "createdAt": "2025-09-08T21:03:53.543Z",
+    "updatedAt": "2025-09-08T22:05:17.449Z",
     "lockUntil": null
   }
 ]

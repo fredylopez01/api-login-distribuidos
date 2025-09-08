@@ -1,11 +1,3 @@
-/**
- * API de Login con Autenticación por Token
- * Servidor principal de la aplicación
- *
- * @author fredylopez01, santino33, davidrm_py
- * @version 1.0.0
- */
-
 // Cargar variables de entorno
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV || "development"}`,
@@ -27,7 +19,7 @@ const passwordRoutes = require("./src/routes/password");
 const { verifyConnection } = require("./src/services/emailService");
 
 // Importar middleware (pendientes de implementar)
-const logger = require('./src/middleware/logger');
+const logger = require("./src/middleware/logger");
 // const config = require('./src/config/config');
 
 const app = express();
@@ -35,7 +27,11 @@ const PORT = process.env.PORT || 3000;
 
 // Configuración de seguridad
 app.use(helmet());
-app.use(cors());
+
+const corsOptions = {
+  origin: ["http://localhost:3000"],
+};
+app.use(cors(corsOptions));
 
 // Rate limiting - máximo 100 requests por 15 minutos
 const limiter = rateLimit({
@@ -51,6 +47,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware de logging
 app.use(logger.logRequest);
+app.use(logger.logError);
 
 // Rutas principales
 app.get("/", (req, res) => {
@@ -74,18 +71,6 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/password", passwordRoutes);
-
-// Middleware de manejo de errores
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    message: "Error interno del servidor",
-    data:
-      process.env.NODE_ENV === "development"
-        ? { error: err.message, stack: err.stack }
-        : null,
-  });
-});
 
 // Ruta 404 - debe ir al final
 app.use((req, res) => {

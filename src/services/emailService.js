@@ -1,60 +1,49 @@
-/**
- * Servicio de Email
- * Maneja el envío de correos electrónicos
- * Responsable: David
- */
+const nodemailer = require("nodemailer");
+const { logError } = require("../middleware/logger");
 
-const nodemailer = require('nodemailer');
-
-// Configuración del transporter de nodemailer
 const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    secure: false, // true para 465, false para otros puertos
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  secure: false, // true para 465, false para otros puertos
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
-/**
- * Verifica la conexión con el servidor de correo
- * @returns {Promise<boolean>} true si la conexión es exitosa
- */
 async function verifyConnection() {
-    try {
-        await transporter.verify();
-        console.log('✅ Servidor de correo conectado correctamente');
-        return true;
-    } catch (error) {
-        console.error('❌ Error al conectar con el servidor de correo:', error.message);
-        return false;
-    }
+  try {
+    await transporter.verify();
+    console.log("✅ Servidor de correo conectado correctamente");
+    return true;
+  } catch (error) {
+    console.error(
+      "❌ Error al conectar con el servidor de correo:",
+      error.message
+    );
+    return false;
+  }
 }
 
-/**
- * Envía un correo de bienvenida al usuario registrado
- * @param {string} email - Email del destinatario
- * @param {string} userName - Nombre del usuario (opcional)
- * @returns {Promise<boolean>} true si se envió correctamente
- */
-async function sendWelcomeEmail(email, userName = 'Usuario') {
-    try {
-        const mailOptions = {
-            from: process.env.EMAIL_FROM,
-            to: email,
-            subject: '¡Bienvenido a API Login! 🎉',
-            html: `
+async function sendWelcomeEmail(email, userName = "Usuario") {
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_FROM,
+      to: email,
+      subject: "¡Bienvenido a API Login! 🎉",
+      html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                     <h2 style="color: #4CAF50;">¡Bienvenido ${userName}!</h2>
                     <p>Tu cuenta ha sido creada exitosamente en nuestra plataforma.</p>
                     <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
                         <h3>Detalles de tu cuenta:</h3>
                         <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Fecha de registro:</strong> ${new Date().toLocaleDateString('es-ES')}</p>
+                        <p><strong>Fecha de registro:</strong> ${new Date().toLocaleDateString(
+                          "es-ES"
+                        )}</p>
                     </div>
                     <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
                     <hr>
@@ -62,31 +51,29 @@ async function sendWelcomeEmail(email, userName = 'Usuario') {
                         Este es un mensaje automático, por favor no respondas a este correo.
                     </p>
                 </div>
-            `
-        };
+            `,
+    };
 
-        const info = await transporter.sendMail(mailOptions);
-        console.log('✅ Correo de bienvenida enviado:', info.messageId);
-        return true;
-    } catch (error) {
-        console.error('❌ Error al enviar correo de bienvenida:', error.message);
-        return false;
-    }
+    const info = await transporter.sendMail(mailOptions);
+    console.log("✅ Correo de bienvenida enviado:", info.messageId);
+    return true;
+  } catch (error) {
+    await logError(
+      "REGISTER-ERROR",
+      null,
+      `Error al enviar correo de bienvenida: ${error.message}`
+    );
+    return false;
+  }
 }
 
-/**
- * Envía un correo con contraseña temporal para restablecer
- * @param {string} email - Email del destinatario
- * @param {string} resetToken - Token para usar como contraseña temporal
- * @returns {Promise<boolean>} true si se envió correctamente
- */
 async function sendPasswordResetEmail(email, resetToken) {
-    try {
-        const mailOptions = {
-            from: process.env.EMAIL_FROM,
-            to: email,
-            subject: 'Contraseña temporal - API Login 🔐',
-            html: `
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_FROM,
+      to: email,
+      subject: "Contraseña temporal - API Login 🔐",
+      html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                     <h2 style="color: #FF9800;">Contraseña temporal generada</h2>
                     <p>Has solicitado restablecer tu contraseña. Te hemos generado una contraseña temporal.</p>
@@ -124,20 +111,24 @@ async function sendPasswordResetEmail(email, resetToken) {
                         Este es un mensaje automático, por favor no respondas a este correo.
                     </p>
                 </div>
-            `
-        };
+            `,
+    };
 
-        const info = await transporter.sendMail(mailOptions);
-        console.log('✅ Correo de contraseña temporal enviado:', info.messageId);
-        return true;
-    } catch (error) {
-        console.error('❌ Error al enviar correo de contraseña temporal:', error.message);
-        return false;
-    }
+    const info = await transporter.sendMail(mailOptions);
+    console.log("✅ Correo de contraseña temporal enviado:", info.messageId);
+    return true;
+  } catch (error) {
+    await logError(
+      "FORGOT-PASSWORD-ERROR",
+      null,
+      `Error al enviar correo de contraseña temporal: ${error.message}`
+    );
+    return false;
+  }
 }
 
 module.exports = {
-    verifyConnection,
-    sendWelcomeEmail,
-    sendPasswordResetEmail
+  verifyConnection,
+  sendWelcomeEmail,
+  sendPasswordResetEmail,
 };
