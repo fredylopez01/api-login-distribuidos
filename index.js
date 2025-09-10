@@ -9,6 +9,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./docs/swagger-output.json");
+const path = require("path");
 
 // Importar rutas
 const authRoutes = require("./src/routes/auth");
@@ -26,7 +27,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configuración de seguridad
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "https://cdn.jsdelivr.net", // 👈 añade esto
+        ],
+      },
+    },
+  })
+);
 
 const corsOptions = {
   origin: ["http://localhost:3000"],
@@ -48,6 +61,9 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware de logging
 app.use(logger.logRequest);
 app.use(logger.logError);
+
+// Archivos estáticos
+app.use(express.static(path.join(__dirname, "public")));
 
 // Rutas principales
 app.get("/", (req, res) => {
@@ -71,6 +87,18 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/password", passwordRoutes);
+
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "register.html"));
+});
+
+app.get("/forgot-password", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "forgot-password.html"));
+});
 
 // Ruta 404 - debe ir al final
 app.use((req, res) => {
