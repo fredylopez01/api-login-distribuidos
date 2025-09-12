@@ -100,15 +100,17 @@ app.get("/forgot-password", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "forgot-password.html"));
 });
 
+app.get("/reset-password", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "reset-password.html"));
+});
+
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
+});
+
 // Ruta 404 - debe ir al final
 app.use((req, res) => {
-  res.status(404).json({
-    message: `La ruta ${req.originalUrl} no existe`,
-    data: {
-      method: req.method,
-      url: req.originalUrl,
-    },
-  });
+  res.status(404).sendFile(path.join(__dirname, "public", "not-found.html"));
 });
 
 // Iniciar servidor

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./styles/dashboard.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <h2 class="logo">MiApp</h2>
+      <nav>
+        <a href="#" class="active">🏠 Inicio</a>
+        <a href="#">📊 Estadísticas</a>
+        <a href="#">👤 Perfil</a>
+        <a href="#">⚙️ Configuración</a>
+      </nav>
+      <a href="/login" class="logout">🚪 Cerrar sesión</a>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <h1>Dashboard</h1>
+        <button class="user-btn">👤 Usuario</button>
+      </header>
+
+      <section class="stats">
+        <div class="card">
+          <h3>Usuarios</h3>
+          <p>1,245</p>
+        </div>
+        <div class="card">
+          <h3>Ventas</h3>
+          <p>$34,800</p>
+        </div>
+        <div class="card">
+          <h3>Visitas</h3>
+          <p>18,230</p>
+        </div>
+      </section>
+
+      <section class="table-section">
+        <h2>Últimos registros</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usuario</th>
+              <th>Email</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#001</td>
+              <td>Ana López</td>
+              <td>ana@correo.com</td>
+              <td><span class="status active">Activo</span></td>
+            </tr>
+            <tr>
+              <td>#002</td>
+              <td>Carlos Pérez</td>
+              <td>carlos@correo.com</td>
+              <td><span class="status inactive">Inactivo</span></td>
+            </tr>
+            <tr>
+              <td>#003</td>
+              <td>Lucía Torres</td>
+              <td>lucia@correo.com</td>
+              <td><span class="status active">Activo</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

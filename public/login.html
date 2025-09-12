@@ -3,68 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SIRA - Sistema de Información y Recursos Administrativos</title>
+    <title>API-SIS-DIS - Iniciar Sesión</title>
     <link rel="stylesheet" href="./styles/login.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <div class="login-container">
       <div class="login-header">
-        <h1>SIRA</h1>
-        <p>Sistema de Información y Recursos Administrativos</p>
+        <h1>Login</h1>
       </div>
 
-      <form class="login-form" id="loginForm">
-        <div id="alertContainer"></div>
+      <div class="auth-box">
+        <form class="login-form" id="loginForm">
+          <div class="loading" id="loading">
+            <div class="spinner"></div>
+            Autenticando usuario...
+          </div>
 
-        <div class="loading" id="loading">
-          <div class="spinner"></div>
-          Autenticando usuario...
-        </div>
+          <div class="form-group">
+            <label for="identifier">Usuario o Email</label>
+            <input
+              type="text"
+              id="identifier"
+              name="identifier"
+              required
+              autocomplete="username"
+              placeholder="Ingrese su usuario o email"
+            />
+          </div>
 
-        <div class="form-group">
-          <label for="identifier">Usuario o Email</label>
-          <input
-            type="text"
-            id="identifier"
-            name="identifier"
-            required
-            autocomplete="username"
-            placeholder="Ingrese su usuario o email"
-          />
-        </div>
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              placeholder="Ingrese su contraseña"
+            />
+          </div>
 
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            required
-            autocomplete="current-password"
-            placeholder="Ingrese su contraseña"
-          />
-        </div>
+          <button type="submit" class="login-btn" id="loginBtn">
+            Iniciar Sesión
+          </button>
 
-        <button type="submit" class="login-btn" id="loginBtn">
-          Iniciar Sesión
-        </button>
+          <div class="forgot-password">
+            <a href="/forgot-password">¿Olvidó su contraseña?</a>
+          </div>
 
-        <div class="forgot-password">
-          <a href="/forgot-password" onclick="showForgotPassword()"
-            >¿Olvidó su contraseña?</a
-          >
-        </div>
-
-        <div class="register-link">
-          <p>
-            ¿No tienes cuenta?
-            <a href="/register" onclick="goToRegister()">Regístrate aquí</a>
-          </p>
-        </div>
-      </form>
+          <div class="register-link">
+            <p>
+              ¿No tienes cuenta?
+              <a href="/register">Regístrate aquí</a>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/login.js"></script>
   </body>
 </html>

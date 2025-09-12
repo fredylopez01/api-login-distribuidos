@@ -1,3 +1,4 @@
+const API_BASE = "http://localhost:3000"; // URL de tu backend
 const loginForm = document.getElementById("loginForm");
 const loginBtn = document.getElementById("loginBtn");
 const loading = document.getElementById("loading");
@@ -6,12 +7,13 @@ function showAlert(message, type = "error") {
   let icon = "error";
   if (type === "success") icon = "success";
   else if (type === "warning") icon = "warning";
+
   Swal.fire({
     text: message,
     icon: icon,
     confirmButtonColor:
       icon === "success"
-        ? "#2563eb"
+        ? "#10b981"
         : icon === "warning"
         ? "#fb8500"
         : "#d90429",
@@ -33,10 +35,39 @@ function setLoading(isLoading) {
   }
 }
 
+async function apiRequest(endpoint, method, data = null) {
+  const options = {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  if (data) {
+    options.body = JSON.stringify(data);
+  }
+
+  try {
+    const response = await fetch(`${API_BASE}${endpoint}`, options);
+    const result = await response.json();
+
+    return {
+      success: response.ok,
+      status: response.status,
+      data: result,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: "Error de conexión con el servidor",
+    };
+  }
+}
+
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const identifier = document.getElementById("identifier").value;
+  const identifier = document.getElementById("identifier").value.trim();
   const password = document.getElementById("password").value;
 
   if (!identifier || !password) {
@@ -47,28 +78,32 @@ loginForm.addEventListener("submit", async (e) => {
   setLoading(true);
 
   try {
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ identifier, password }),
+    const result = await apiRequest("/api/auth/login", "POST", {
+      email: identifier,
+      password,
     });
 
-    const data = await response.json();
-
-    if (response.ok) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+    if (result.success) {
+      localStorage.setItem("authToken", result.data.token);
       showAlert("¡Login exitoso! Redirigiendo...", "success");
+
       setTimeout(() => {
         window.location.href = "/dashboard";
-      }, 1000);
+      }, 1500);
     } else {
-      if (response.status === 423) {
-        showAlert(data.message, "warning");
+      if (result.status === 423) {
+        showAlert(
+          result.data.message || "Cuenta bloqueada temporalmente.",
+          "warning"
+        );
+      } else if (result.status === 401) {
+        showAlert(
+          "Credenciales incorrectas. Verifica tu usuario y contraseña."
+        );
+      } else if (result.status === 404) {
+        showAlert("Usuario no encontrado. Verifica tus datos.");
       } else {
-        showAlert(data.message || "Error en el login.");
+        showAlert(result.data?.message || "Error en el servidor.");
       }
     }
   } catch (error) {
@@ -79,12 +114,13 @@ loginForm.addEventListener("submit", async (e) => {
   }
 });
 
-function showForgotPassword() {
-  window.location.href = "/demo/forgot-password";
-}
-
-function goToRegister() {
-  window.location.href = "/register";
+// Verificar si ya está autenticado
+function checkAuthStatus() {
+  const token = localStorage.getItem("authToken");
+  if (token) {
+    // Verificar si el token es válido (opcional)
+    window.location.href = "/dashboard";
+  }
 }
 
 // Auto-completar para demo
@@ -98,4 +134,18 @@ document.addEventListener("keydown", (e) => {
     document.getElementById("identifier").value = "nicolas";
     document.getElementById("password").value = "nicolas123";
   }
+});
+
+// Inicializar
+document.addEventListener("DOMContentLoaded", () => {
+  checkAuthStatus();
+});
+
+// Limpiar errores al escribir
+document.querySelectorAll("input").forEach((input) => {
+  input.addEventListener("input", () => {
+    if (input.style.borderColor === "rgb(239, 68, 68)") {
+      input.style.borderColor = "";
+    }
+  });
 });

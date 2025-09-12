@@ -1,8 +1,18 @@
 :root {
-  --primary-gradient: linear-gradient(135deg, #0f766e 0%, #1e40af 100%);
-  --glass-bg: rgba(255, 255, 255, 0.15);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --shadow-light: 0 8px 32px rgba(15, 118, 110, 0.3);
+  --primary-gradient: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  --glass-bg: #ffffff;
+  --glass-border: #e5e7eb;
+  --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  --accent-green: #16a34a;
+  --dark-green: #065f46;
+  --text-dark: #111111;
+  --text-light: #6b7280;
+  --border-color: #e5e7eb;
+  --error-color: #dc2626;
+  --error-bg: #fee2e2;
+  --success-color: #16a34a;
+  --success-bg: #dcfce7;
 }
 
 * {
@@ -19,28 +29,8 @@ body {
   align-items: center;
   background: var(--primary-gradient);
   position: relative;
-  overflow: scroll;
+  overflow: auto;
   padding: 2rem 0;
-}
-
-body::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-      circle at 30% 20%,
-      rgba(16, 185, 129, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 70% 80%,
-      rgba(59, 130, 246, 0.08) 0%,
-      transparent 50%
-    );
-  animation: float 20s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -64,29 +54,26 @@ body::before {
 .register-header {
   text-align: center;
   margin-bottom: 2rem;
-  color: white;
 }
 
 .register-header h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
+  color: var(--accent-green);
   margin-bottom: 0.5rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .register-header p {
-  font-size: 1rem;
-  opacity: 0.9;
+  font-size: 0.95rem;
+  color: var(--text-light);
   font-weight: 300;
 }
 
 .auth-box {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   padding: 2rem;
-  border-radius: 24px;
+  border-radius: 16px;
   box-shadow: var(--shadow-light);
   position: relative;
   animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -112,26 +99,25 @@ body::before {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-dark);
   font-size: 0.875rem;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 1rem 1.25rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
   outline: none;
-  color: white;
+  color: var(--text-dark);
   font-size: 1rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-light);
 }
 
 .form-group select {
@@ -139,32 +125,31 @@ body::before {
 }
 
 .form-group select option {
-  background: #1f2937;
-  color: white;
+  background: #fff;
+  color: var(--text-dark);
 }
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: rgba(16, 185, 129, 0.6);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
   transform: translateY(-2px);
 }
 
 .form-group.error input,
 .form-group.error select {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  border-color: var(--error-color);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
 .form-group.success input,
 .form-group.success select {
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
 }
 
 .field-error {
-  color: #fca5a5;
+  color: var(--error-color);
   font-size: 0.75rem;
   margin-top: 0.25rem;
   display: block;
@@ -172,23 +157,21 @@ body::before {
 
 .register-btn {
   width: 100%;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+  padding: 1rem;
+  background: var(--accent-green);
   border: none;
-  border-radius: 12px;
-  color: white;
+  border-radius: 10px;
+  color: #fff;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
+  transition: background 0.3s ease, transform 0.2s ease;
   margin-bottom: 1rem;
 }
 
 .register-btn:hover {
+  background: var(--dark-green);
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);
 }
 
 .register-btn:disabled {
@@ -200,7 +183,7 @@ body::before {
 .loading {
   display: none;
   text-align: center;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-light);
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
@@ -208,8 +191,8 @@ body::before {
 .spinner {
   width: 20px;
   height: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top: 2px solid white;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-top: 2px solid var(--accent-green);
   border-radius: 50%;
   display: inline-block;
   margin-right: 0.5rem;
@@ -229,32 +212,29 @@ body::before {
   text-align: center;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--border-color);
 }
 
 .login-link p {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-light);
   font-size: 0.875rem;
 }
 
 .login-link a {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--accent-green);
   text-decoration: none;
+  font-weight: 500;
   transition: color 0.3s ease;
 }
 
 .login-link a:hover {
-  color: #10b981;
+  color: var(--dark-green);
 }
 
 .password-requirements {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-light);
   margin-top: 0.25rem;
-}
-
-.password-requirements.show {
-  display: block;
 }
 
 .requirements-list {
@@ -272,12 +252,12 @@ body::before {
   content: "✗";
   position: absolute;
   left: 0;
-  color: #fca5a5;
+  color: var(--error-color);
 }
 
 .requirements-list li.valid::before {
   content: "✓";
-  color: #86efac;
+  color: var(--success-color);
 }
 
 @media (max-width: 480px) {
@@ -288,10 +268,10 @@ body::before {
   .auth-box {
     padding: 2rem 1.5rem;
     margin: 1rem;
-    border-radius: 20px;
+    border-radius: 16px;
   }
 
   .register-header h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 }
