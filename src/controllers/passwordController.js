@@ -2,10 +2,11 @@ const { User } = require("../models/User");
 const {
   readResetTokens,
   writeResetTokens,
+  writeErrorLog,
 } = require("../services/fileService");
 const { sendPasswordResetEmail } = require("../services/emailService");
 const { sanitizeInput } = require("../utils/validators");
-const { logUserAction, logError } = require("../middleware/logger");
+const { logUserAction } = require("../middleware/logger");
 const { generateTemporaryPassword } = require("../utils/passwords");
 
 const requestPasswordReset = async (req, res) => {
@@ -69,11 +70,10 @@ const requestPasswordReset = async (req, res) => {
         "Si el email existe en nuestro sistema, recibirás un correo con una contraseña temporal",
     });
   } catch (error) {
-    await logError(
-      "REQUEST-RESET-PASSWORD-ERROR",
-      null,
-      `Error petición de reseteo de contraseña: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `REQUEST-RESET-PASSWORD-ERROR: Error petición de reseteo de contraseña: ${error.message}`,
+      stack: error.stack,
+    });
     res.status(500).json({
       message: "Error interno del servidor",
     });
@@ -132,11 +132,10 @@ const resetPassword = async (req, res) => {
       message: "Contraseña restablecida exitosamente",
     });
   } catch (error) {
-    await logError(
-      "RESET-PASSWORD-ERROR",
-      null,
-      `Error restableciendo contraseña: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `RESET-PASSWORD-ERROR: Error restableciendo contraseña: ${error.message}`,
+      stack: error.stack,
+    });
     res.status(500).json({
       message: "Error interno del servidor",
     });
@@ -175,11 +174,10 @@ const changePassword = async (req, res) => {
       message: "Contraseña cambiada exitosamente",
     });
   } catch (error) {
-    await logError(
-      "CHANGE-PASSWORD-ERROR",
-      null,
-      `Error en cambio de contraseña: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `CHANGE-PASSWORD-ERROR: Error en cambio de contraseña: ${error.message}`,
+      stack: error.stack,
+    });
     res.status(500).json({
       message: "Error interno del servidor",
     });
@@ -220,11 +218,10 @@ const validateResetToken = async (req, res) => {
       },
     });
   } catch (error) {
-    await logError(
-      "VALIDATE-TOKEN",
-      null,
-      `Error en validación de token: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `VALIDATE-TOKEN-ERROR: Error en validación de token: ${error.message}`,
+      stack: error.stack,
+    });
     res.status(500).json({
       message: "Error interno del servidor",
     });

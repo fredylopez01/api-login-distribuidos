@@ -140,11 +140,10 @@ class User {
 
       return { valid: true, requiresPasswordChange: true };
     } catch (error) {
-      await logError(
-        "POST-RESET-PASSWORD",
-        null,
-        `Error verificando contraseña: ${error.message}`
-      );
+      await writeErrorLog({
+        message: `POST-RESET-PASSWORD-ERROR: Error verificando contraseña: ${error.message}`,
+        stack: error.stack,
+      });
       return { valid: false, reason: "Error interno" };
     }
   }

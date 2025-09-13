@@ -1,7 +1,8 @@
 const API_BASE = "http://localhost:3000"; // URL de tu backend
 const loginForm = document.getElementById("loginForm");
 const loginBtn = document.getElementById("loginBtn");
-const loading = document.getElementById("loading");
+const btnText = document.getElementById("btnText");
+const btnSpinner = document.getElementById("btnSpinner");
 
 function showAlert(message, type = "error") {
   let icon = "error";
@@ -25,13 +26,13 @@ function showAlert(message, type = "error") {
 
 function setLoading(isLoading) {
   if (isLoading) {
-    loading.style.display = "block";
     loginBtn.disabled = true;
-    loginBtn.textContent = "Iniciando...";
+    btnText.textContent = "Iniciando...";
+    btnSpinner.style.display = "inline-block";
   } else {
-    loading.style.display = "none";
     loginBtn.disabled = false;
-    loginBtn.textContent = "Iniciar Sesión";
+    btnText.textContent = "Iniciar Sesión";
+    btnSpinner.style.display = "none";
   }
 }
 
@@ -98,7 +99,7 @@ loginForm.addEventListener("submit", async (e) => {
         );
       } else if (result.status === 401) {
         showAlert(
-          "Credenciales incorrectas. Verifica tu usuario y contraseña."
+          result.data.message || "Credenciales inválidas. Intenta de nuevo."
         );
       } else if (result.status === 404) {
         showAlert("Usuario no encontrado. Verifica tus datos.");
@@ -118,7 +119,6 @@ loginForm.addEventListener("submit", async (e) => {
 function checkAuthStatus() {
   const token = localStorage.getItem("authToken");
   if (token) {
-    // Verificar si el token es válido (opcional)
     window.location.href = "/dashboard";
   }
 }

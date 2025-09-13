@@ -33,46 +33,30 @@ body {
   padding: 2rem 0;
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(180deg);
-  }
-}
-
 .register-container {
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 450px;
+  max-width: 470px;
   padding: 0 1rem;
 }
 
 .register-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .register-header h1 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: var(--accent-green);
-  margin-bottom: 0.5rem;
-}
-
-.register-header p {
-  font-size: 0.95rem;
-  color: var(--text-light);
-  font-weight: 300;
+  margin-bottom: 0.3rem;
 }
 
 .auth-box {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 16px;
   box-shadow: var(--shadow-light);
   position: relative;
@@ -124,16 +108,11 @@ body {
   cursor: pointer;
 }
 
-.form-group select option {
-  background: #fff;
-  color: var(--text-dark);
-}
-
 .form-group input:focus,
 .form-group select:focus {
   border-color: var(--accent-green);
   box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .form-group.error input,
@@ -153,6 +132,39 @@ body {
   font-size: 0.75rem;
   margin-top: 0.25rem;
   display: block;
+}
+
+/* Contraseña y confirmación en línea */
+.password-inline {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.password-inline input {
+  flex: 1;
+}
+
+/* Requisitos en chips */
+.password-requirements-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.password-requirements-inline span {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: var(--error-bg);
+  color: var(--error-color);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.password-requirements-inline span.valid {
+  background: var(--success-bg);
+  color: var(--success-color);
 }
 
 .register-btn {
@@ -189,8 +201,8 @@ body {
 }
 
 .spinner {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-top: 2px solid var(--accent-green);
   border-radius: 50%;
@@ -210,14 +222,14 @@ body {
 
 .login-link {
   text-align: center;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--border-color);
 }
 
 .login-link p {
   color: var(--text-light);
-  font-size: 0.875rem;
+  font-size: 0.85rem;
 }
 
 .login-link a {
@@ -231,47 +243,17 @@ body {
   color: var(--dark-green);
 }
 
-.password-requirements {
-  font-size: 0.75rem;
-  color: var(--text-light);
-  margin-top: 0.25rem;
-}
-
-.requirements-list {
-  list-style: none;
-  margin-top: 0.5rem;
-}
-
-.requirements-list li {
-  padding: 0.125rem 0;
-  position: relative;
-  padding-left: 1rem;
-}
-
-.requirements-list li::before {
-  content: "✗";
-  position: absolute;
-  left: 0;
-  color: var(--error-color);
-}
-
-.requirements-list li.valid::before {
-  content: "✓";
-  color: var(--success-color);
-}
-
 @media (max-width: 480px) {
-  body {
-    padding: 1rem 0;
-  }
-
   .auth-box {
-    padding: 2rem 1.5rem;
-    margin: 1rem;
-    border-radius: 16px;
+    padding: 1.2rem;
+    margin: 0.5rem;
   }
 
   .register-header h1 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+  }
+
+  .password-inline {
+    flex-direction: column;
   }
 }

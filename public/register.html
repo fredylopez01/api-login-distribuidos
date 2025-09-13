@@ -33,37 +33,32 @@
             <span class="field-error"></span>
           </div>
 
-          <div class="form-group">
+          <div class="form-group password-group">
             <label for="password">Contraseña</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              required
-              autocomplete="new-password"
-              placeholder="Mínimo 8 caracteres"
-            />
-            <div class="password-requirements" id="passwordRequirements">
-              <ul class="requirements-list">
-                <li id="req-length">Al menos 8 caracteres</li>
-                <li id="req-upper">Al menos 1 mayúscula</li>
-                <li id="req-lower">Al menos 1 minúscula</li>
-                <li id="req-number">Al menos 1 número</li>
-              </ul>
+            <div class="password-inline">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                autocomplete="new-password"
+                placeholder="Mínimo 8 caracteres"
+              />
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                required
+                autocomplete="new-password"
+                placeholder="Confirmar"
+              />
             </div>
-            <span class="field-error"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="confirmPassword">Confirmar Contraseña</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              required
-              autocomplete="new-password"
-              placeholder="Confirma tu contraseña"
-            />
+            <div class="password-requirements-inline" id="passwordRequirements">
+              <span id="req-length">8+</span>
+              <span id="req-upper">A</span>
+              <span id="req-lower">a</span>
+              <span id="req-number">123</span>
+            </div>
             <span class="field-error"></span>
           </div>
 
@@ -78,20 +73,19 @@
           </div>
 
           <button type="submit" class="register-btn" id="registerBtn">
-            Crear Cuenta
+            <span id="btnText">Crear Cuenta</span>
+            <div class="spinner" id="btnSpinner" style="display: none"></div>
           </button>
 
           <div class="login-link">
             <p>
-              ¿Ya tienes cuenta?
-              <a href="/login">Inicia sesión aquí</a>
+              <a href="/dashboard">Volver al dashboard</a>
             </p>
           </div>
         </form>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/register.js"></script>
   </body>
 </html>

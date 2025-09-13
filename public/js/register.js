@@ -1,9 +1,12 @@
-const API_BASE = "http://localhost:3000";
+const API_BASE = "http://localhost:3000/api";
 const registerForm = document.getElementById("registerForm");
 const registerBtn = document.getElementById("registerBtn");
 const loading = document.getElementById("loading");
 const passwordInput = document.getElementById("password");
 const confirmPasswordInput = document.getElementById("confirmPassword");
+const btnText = document.getElementById("btnText");
+const btnSpinner = document.getElementById("btnSpinner");
+const token = localStorage.getItem("authToken");
 
 function showAlert(message, type = "error") {
   let icon = "error";
@@ -27,42 +30,38 @@ function showAlert(message, type = "error") {
 
 function setLoading(isLoading) {
   if (isLoading) {
-    loading.style.display = "block";
     registerBtn.disabled = true;
-    registerBtn.textContent = "Creando...";
+    btnText.textContent = "Iniciando...";
+    btnSpinner.style.display = "inline-block";
   } else {
-    loading.style.display = "none";
     registerBtn.disabled = false;
-    registerBtn.textContent = "Crear Cuenta";
+    btnText.textContent = "Iniciar Sesión";
+    btnSpinner.style.display = "none";
   }
 }
 
 function showFieldError(fieldId, message) {
-  const inputGroup = document.getElementById(fieldId).parentNode;
+  const inputGroup = document.getElementById(fieldId).parentNode.parentNode;
   inputGroup.classList.add("error");
   inputGroup.classList.remove("success");
   inputGroup.querySelector(".field-error").textContent = message;
 }
 
 function showFieldSuccess(fieldId) {
-  const inputGroup = document.getElementById(fieldId).parentNode;
+  const inputGroup = document.getElementById(fieldId).parentNode.parentNode;
   inputGroup.classList.add("success");
   inputGroup.classList.remove("error");
   inputGroup.querySelector(".field-error").textContent = "";
 }
 
 function clearFieldError(fieldId) {
-  const inputGroup = document.getElementById(fieldId).parentNode;
+  const inputGroup = document.getElementById(fieldId).parentNode.parentNode;
   inputGroup.classList.remove("error", "success");
   inputGroup.querySelector(".field-error").textContent = "";
 }
 
 function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function validateUsername(username) {
-  return /^[a-zA-Z0-9_]{3,20}$/.test(username);
 }
 
 function validatePassword(password) {
@@ -73,19 +72,19 @@ function validatePassword(password) {
     number: /\d/.test(password),
   };
 
-  // Update visual requirements
-  document.getElementById("req-length").className = requirements.length
-    ? "valid"
-    : "";
-  document.getElementById("req-upper").className = requirements.upper
-    ? "valid"
-    : "";
-  document.getElementById("req-lower").className = requirements.lower
-    ? "valid"
-    : "";
-  document.getElementById("req-number").className = requirements.number
-    ? "valid"
-    : "";
+  // Actualiza requisitos compactos
+  document
+    .getElementById("req-length")
+    .classList.toggle("valid", requirements.length);
+  document
+    .getElementById("req-upper")
+    .classList.toggle("valid", requirements.upper);
+  document
+    .getElementById("req-lower")
+    .classList.toggle("valid", requirements.lower);
+  document
+    .getElementById("req-number")
+    .classList.toggle("valid", requirements.number);
 
   return Object.values(requirements).every((req) => req);
 }
@@ -95,6 +94,7 @@ async function apiRequest(endpoint, method, data = null) {
     method,
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   };
 
@@ -120,18 +120,6 @@ async function apiRequest(endpoint, method, data = null) {
 }
 
 // Validación en tiempo real
-document.getElementById("username").addEventListener("blur", function () {
-  const username = this.value.trim();
-  if (username && !validateUsername(username)) {
-    showFieldError(
-      "username",
-      "Usuario debe tener 3-20 caracteres (solo letras, números y _)"
-    );
-  } else if (username) {
-    showFieldSuccess("username");
-  }
-});
-
 document.getElementById("email").addEventListener("blur", function () {
   const email = this.value.trim();
   if (email && !validateEmail(email)) {
@@ -149,12 +137,10 @@ passwordInput.addEventListener("input", function () {
     if (isValid) {
       showFieldSuccess("password");
     } else {
-      // No mostrar error hasta que termine de escribir
       clearFieldError("password");
     }
   }
 
-  // Validar confirmación si ya tiene texto
   if (confirmPasswordInput.value) {
     validatePasswordConfirmation();
   }
@@ -179,25 +165,12 @@ confirmPasswordInput.addEventListener("input", validatePasswordConfirmation);
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const username = document.getElementById("username").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirmPassword").value;
   const role = document.getElementById("role").value;
 
   let hasErrors = false;
-
-  // Validaciones
-  if (!username) {
-    showFieldError("username", "El nombre de usuario es requerido");
-    hasErrors = true;
-  } else if (!validateUsername(username)) {
-    showFieldError(
-      "username",
-      "Usuario debe tener 3-20 caracteres (solo letras, números y _)"
-    );
-    hasErrors = true;
-  }
 
   if (!email) {
     showFieldError("email", "El email es requerido");
@@ -237,7 +210,6 @@ registerForm.addEventListener("submit", async (e) => {
 
   try {
     const result = await apiRequest("/users/register", "POST", {
-      username,
       email,
       password,
       role,
@@ -248,20 +220,19 @@ registerForm.addEventListener("submit", async (e) => {
         "¡Cuenta creada exitosamente! Redirigiendo al login...",
         "success"
       );
-
       setTimeout(() => {
         window.location.href = "/login";
       }, 2000);
     } else {
       if (result.status === 409) {
-        showAlert("Ya existe un usuario con ese email o nombre de usuario.");
-        if (result.data?.field === "email") {
-          showFieldError("email", "Este email ya está registrado");
-        } else if (result.data?.field === "username") {
-          showFieldError("username", "Este nombre de usuario ya está en uso");
-        }
+        showAlert(
+          result.data?.message || "Ya existe un usuario con ese email."
+        );
       } else if (result.status === 400) {
-        showAlert("Datos inválidos. Revisa la información ingresada.");
+        showAlert(
+          result.data?.message ||
+            "Datos inválidos. Revisa la información ingresada."
+        );
       } else {
         showAlert(result.data?.message || "Error en el servidor.");
       }
@@ -282,9 +253,11 @@ document.querySelectorAll("input, select").forEach((input) => {
 });
 
 // Verificar si ya está autenticado
-document.addEventListener("DOMContentLoaded", () => {
+function checkAuthStatus() {
   const token = localStorage.getItem("authToken");
-  if (token) {
+  const currentPath = window.location.pathname;
+
+  if (token && currentPath === "/login") {
     window.location.href = "/dashboard";
   }
-});
+}

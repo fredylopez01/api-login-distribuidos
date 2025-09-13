@@ -192,3 +192,71 @@ tbody tr:nth-child(even) {
     margin-left: 0;
   }
 }
+.section.hidden {
+  display: none;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.controls select,
+.controls button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.controls button {
+  background: var(--accent-green);
+  color: #fff;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.controls button:hover {
+  background: var(--dark-green);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+}
+
+form input,
+form button {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+form button {
+  background: var(--accent-green);
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: var(--dark-green);
+}
+
+button.danger {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button.danger:hover {
+  background: #b91c1c;
+}

@@ -1,7 +1,8 @@
 const { User, userRoles } = require("../models/User");
 const { sanitizeInput } = require("../utils/validators");
 const { sendWelcomeEmail } = require("../services/emailService");
-const { logUserAction, logError } = require("../middleware/logger");
+const { logUserAction } = require("../middleware/logger");
+const { writeErrorLog } = require("../services/fileService");
 
 const register = async (req, res) => {
   try {
@@ -28,11 +29,10 @@ const register = async (req, res) => {
         );
       })
       .catch(async (error) => {
-        await logError(
-          "REGISTER-CONFIRMATION-ERROR",
-          req.user?.id || null,
-          `Error al enviar correo de bienvenida: ${error.message}`
-        );
+        await writeErrorLog({
+          message: `REGISTER-CONFIRMATION-ERROR: Error al enviar correo de bienvenida: ${error.message}`,
+          stack: error.stack,
+        });
       });
 
     await logUserAction(
@@ -48,11 +48,10 @@ const register = async (req, res) => {
       },
     });
   } catch (error) {
-    await logError(
-      "REGISTER-CONFIRMATION-ERROR",
-      req.user?.id || null,
-      `Error al registrar usuario: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `REGISTER-CONFIRMATION-ERROR: Error al registrar usuario: ${error.message}`,
+      stack: error.stack,
+    });
 
     if (error.message === "El email ya está registrado") {
       return res.status(409).json({
@@ -98,11 +97,10 @@ const getUserProfile = async (req, res) => {
       },
     });
   } catch (error) {
-    await logError(
-      "GET-USER",
-      req.user?.id || null,
-      `Error obteniendo perfil: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `GET-USER: Error obteniendo perfil: ${error.message}`,
+      stack: error.stack,
+    });
     res.status(500).json({
       message: "Error interno del servidor",
       data:
@@ -151,11 +149,10 @@ const updateUserProfile = async (req, res) => {
       },
     });
   } catch (error) {
-    await logError(
-      "UPDATE-USERS",
-      req.user?.id || null,
-      `Error actualizando perfil: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `UPDATE-USERS: Error actualizando perfil: ${error.message}`,
+      stack: error.stack,
+    });
 
     if (error.message === "Usuario no encontrado") {
       return res.status(404).json({
@@ -189,11 +186,10 @@ const deleteUser = async (req, res) => {
       message: "Usuario eliminado exitosamente",
     });
   } catch (error) {
-    await logError(
-      "DEL-USERS",
-      req.user?.id || null,
-      `Error eliminando usuario: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `DEL-USERS: Error eliminando usuario: ${error.message}`,
+      stack: error.stack,
+    });
 
     if (error.message === "Usuario no encontrado") {
       return res.status(404).json({
@@ -231,11 +227,10 @@ const getUsersByRole = async (req, res) => {
       },
     });
   } catch (error) {
-    await logError(
-      "GET-USERS",
-      req.user?.id || null,
-      `Error obteniendo usuarios por rol: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `GET-USERS: Error obteniendo usuarios por rol: ${error.message}`,
+      stack: error.stack,
+    });
     res.status(500).json({
       message: "Error interno del servidor",
       data:
@@ -263,11 +258,10 @@ const getAllUsers = async (req, res) => {
       },
     });
   } catch (error) {
-    await logError(
-      "GET-USERS",
-      req.user?.id || null,
-      `Error obteniendo todos los usuarios: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `GET-USERS: Error obteniendo todos los usuarios: ${error.message}`,
+      stack: error.stack,
+    });
     res.status(500).json({
       message: "Error interno del servidor",
       data:

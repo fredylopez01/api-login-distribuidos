@@ -21,6 +21,7 @@ const { verifyConnection } = require("./src/services/emailService");
 
 // Importar middleware (pendientes de implementar)
 const logger = require("./src/middleware/logger");
+const { verifyToken } = require("./src/middleware/auth");
 // const config = require('./src/config/config');
 
 const app = express();

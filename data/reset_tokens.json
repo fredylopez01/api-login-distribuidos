@@ -1,18 +1,18 @@
 [
   {
-    "email": "fredy.lopez04@uptc.edu.co",
-    "token": "9rx9ye@LI17S",
-    "expiresAt": "2025-09-08T03:07:22.914Z",
-    "used": true,
-    "createdAt": "2025-09-08T02:07:22.915Z",
-    "usedAt": "2025-09-08T02:12:21.467Z"
-  },
-  {
     "email": "fl8333317@gmail.com",
     "token": "%yE28tWCBHRl",
     "expiresAt": "2025-09-08T22:28:09.336Z",
     "used": true,
     "createdAt": "2025-09-08T21:28:09.337Z",
     "usedAt": "2025-09-08T21:30:24.137Z"
+  },
+  {
+    "email": "fredy.lopez04@uptc.edu.co",
+    "token": "5lqc@Vv5I$&B",
+    "expiresAt": "2025-09-13T01:47:44.723Z",
+    "used": true,
+    "createdAt": "2025-09-13T00:47:44.724Z",
+    "usedAt": "2025-09-13T00:55:22.761Z"
   }
 ]

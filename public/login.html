@@ -15,11 +15,6 @@
 
       <div class="auth-box">
         <form class="login-form" id="loginForm">
-          <div class="loading" id="loading">
-            <div class="spinner"></div>
-            Autenticando usuario...
-          </div>
-
           <div class="form-group">
             <label for="identifier">Usuario o Email</label>
             <input
@@ -45,18 +40,12 @@
           </div>
 
           <button type="submit" class="login-btn" id="loginBtn">
-            Iniciar Sesión
+            <span id="btnText">Iniciar Sesión</span>
+            <div class="spinner" id="btnSpinner" style="display: none"></div>
           </button>
 
           <div class="forgot-password">
             <a href="/forgot-password">¿Olvidó su contraseña?</a>
-          </div>
-
-          <div class="register-link">
-            <p>
-              ¿No tienes cuenta?
-              <a href="/register">Regístrate aquí</a>
-            </p>
           </div>
         </form>
       </div>

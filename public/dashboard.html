@@ -10,68 +10,103 @@
     <aside class="sidebar">
       <h2 class="logo">MiApp</h2>
       <nav>
-        <a href="#" class="active">🏠 Inicio</a>
-        <a href="#">📊 Estadísticas</a>
-        <a href="#">👤 Perfil</a>
+        <a href="#" class="active" data-section="home">🏠 Inicio</a>
+        <a href="#" data-section="users">👥 Gestión de Usuarios</a>
+        <a href="#" data-section="profile">👤 Mi Perfil</a>
         <a href="#">⚙️ Configuración</a>
       </nav>
-      <a href="/login" class="logout">🚪 Cerrar sesión</a>
+      <a href="#" id="logoutBtn" class="logout">🚪 Cerrar sesión</a>
     </aside>
 
     <main class="main-content">
       <header class="header">
-        <h1>Dashboard</h1>
-        <button class="user-btn">👤 Usuario</button>
+        <h1 id="sectionTitle">Dashboard</h1>
+        <button class="user-btn" id="userBtn">👤 Usuario</button>
       </header>
 
-      <section class="stats">
-        <div class="card">
-          <h3>Usuarios</h3>
-          <p>1,245</p>
+      <!-- Inicio -->
+      <section id="homeSection" class="section active">
+        <div class="stats">
+          <div class="card">
+            <h3>Total Usuarios</h3>
+            <p id="totalUsers">0</p>
+          </div>
+          <div class="card">
+            <h3>Activos</h3>
+            <p id="activeUsers">0</p>
+          </div>
+          <div class="card">
+            <h3>Inactivos</h3>
+            <p id="inactiveUsers">0</p>
+          </div>
         </div>
-        <div class="card">
-          <h3>Ventas</h3>
-          <p>$34,800</p>
-        </div>
-        <div class="card">
-          <h3>Visitas</h3>
-          <p>18,230</p>
+        <div class="table-section">
+          <h2>Últimos registros</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="4">Cargando usuarios...</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <section class="table-section">
-        <h2>Últimos registros</h2>
+      <!-- Gestión de Usuarios -->
+      <section id="usersSection" class="section hidden">
+        <h2>Gestión de Usuarios</h2>
+        <div class="controls">
+          <select id="roleFilter">
+            <option value="all">Todos</option>
+            <option value="admin">Admins</option>
+            <option value="user">Usuarios</option>
+          </select>
+          <button id="addUserBtn">➕ Crear Usuario</button>
+        </div>
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Usuario</th>
               <th>Email</th>
+              <th>Rol</th>
               <th>Estado</th>
+              <th>Acciones</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="manageUsersTable">
             <tr>
-              <td>#001</td>
-              <td>Ana López</td>
-              <td>ana@correo.com</td>
-              <td><span class="status active">Activo</span></td>
-            </tr>
-            <tr>
-              <td>#002</td>
-              <td>Carlos Pérez</td>
-              <td>carlos@correo.com</td>
-              <td><span class="status inactive">Inactivo</span></td>
-            </tr>
-            <tr>
-              <td>#003</td>
-              <td>Lucía Torres</td>
-              <td>lucia@correo.com</td>
-              <td><span class="status active">Activo</span></td>
+              <td colspan="5">Cargando...</td>
             </tr>
           </tbody>
         </table>
       </section>
+
+      <!-- Mi Perfil -->
+      <section id="profileSection" class="section hidden">
+        <h2>Mi Perfil</h2>
+        <form id="profileForm">
+          <label>Email</label>
+          <input type="email" id="profileEmail" required />
+          <label>Contraseña (opcional)</label>
+          <input
+            type="password"
+            id="profilePassword"
+            placeholder="Nueva contraseña"
+          />
+          <button type="submit">Actualizar Perfil</button>
+        </form>
+        <button id="deleteAccountBtn" class="danger">Eliminar mi cuenta</button>
+      </section>
     </main>
+
+    <script src="./js/dashboard.js"></script>
   </body>
 </html>

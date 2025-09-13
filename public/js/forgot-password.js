@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000";
+const API_BASE = "http://localhost:3000/api";
 const forgotForm = document.getElementById("forgotForm");
 const forgotBtn = document.getElementById("forgotBtn");
 const loading = document.getElementById("loading");

@@ -1,6 +1,7 @@
 const { sanitizeInput } = require("../utils/validators");
 const { loginUser } = require("../services/authService");
-const { logUserAction, logError } = require("../middleware/logger");
+const { logUserAction } = require("../middleware/logger");
+const { writeErrorLog } = require("../services/fileService");
 
 async function login(req, res) {
   try {
@@ -25,7 +26,10 @@ async function login(req, res) {
     );
     return res.json({ message: "Login exitoso", token: result.token });
   } catch (error) {
-    await logError("LOGIN-ERROR", null, `Error en el login: ${error.message}`);
+    await writeErrorLog({
+      message: `LOGIN-ERROR: Error en el login: ${error.message}`,
+      stack: error.stack,
+    });
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 }
