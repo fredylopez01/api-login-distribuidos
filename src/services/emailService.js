@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-const { logError } = require("../middleware/logger");
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
@@ -58,11 +57,10 @@ async function sendWelcomeEmail(email, userName = "Usuario") {
     console.log("✅ Correo de bienvenida enviado:", info.messageId);
     return true;
   } catch (error) {
-    await logError(
-      "REGISTER-ERROR",
-      null,
-      `Error al enviar correo de bienvenida: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `REGISTER-CONFIRMATION-ERROR: Error al enviar correo de bienvenida: ${error.message}`,
+      stack: error.stack,
+    });
     return false;
   }
 }
@@ -118,11 +116,10 @@ async function sendPasswordResetEmail(email, resetToken) {
     console.log("✅ Correo de contraseña temporal enviado:", info.messageId);
     return true;
   } catch (error) {
-    await logError(
-      "FORGOT-PASSWORD-ERROR",
-      null,
-      `Error al enviar correo de contraseña temporal: ${error.message}`
-    );
+    await writeErrorLog({
+      message: `FORGOT-PASSWORD-ERROR: Error al enviar correo de contraseña temporal: ${error.message}`,
+      stack: error.stack,
+    });
     return false;
   }
 }

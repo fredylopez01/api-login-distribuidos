@@ -15,7 +15,7 @@ const validateUserRegistration = (req, res, next) => {
 
     if (!validation.isValid) {
       return res.status(400).json({
-        message: "Datos de registro inválidos",
+        message: validation.errors.join(", ") || "Datos de registro inválidos",
         data: {
           errors: validation.errors,
         },

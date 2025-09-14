@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./styles/dashboard.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <h2 class="logo">MiApp</h2>
+      <nav>
+        <a href="#" class="active" data-section="home">🏠 Inicio</a>
+        <a href="#" data-section="users">👥 Gestión de Usuarios</a>
+        <a href="#" data-section="profile">👤 Mi Perfil</a>
+        <a href="#">⚙️ Configuración</a>
+      </nav>
+      <a href="#" id="logoutBtn" class="logout">🚪 Cerrar sesión</a>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <h1 id="sectionTitle">Dashboard</h1>
+        <button class="user-btn" id="userBtn">👤 Usuario</button>
+      </header>
+
+      <!-- Inicio -->
+      <section id="homeSection" class="section active">
+        <div class="stats">
+          <div class="card">
+            <h3>Total Usuarios</h3>
+            <p id="totalUsers">0</p>
+          </div>
+          <div class="card">
+            <h3>Activos</h3>
+            <p id="activeUsers">0</p>
+          </div>
+          <div class="card">
+            <h3>Inactivos</h3>
+            <p id="inactiveUsers">0</p>
+          </div>
+        </div>
+        <div class="table-section">
+          <h2>Últimos registros</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="4">Cargando usuarios...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Gestión de Usuarios -->
+      <section id="usersSection" class="section hidden">
+        <h2>Gestión de Usuarios</h2>
+        <div class="controls">
+          <select id="roleFilter">
+            <option value="all">Todos</option>
+            <option value="admin">Admins</option>
+            <option value="user">Usuarios</option>
+          </select>
+          <button id="addUserBtn">➕ Crear Usuario</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="manageUsersTable">
+            <tr>
+              <td colspan="5">Cargando...</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Mi Perfil -->
+      <section id="profileSection" class="section hidden">
+        <h2>Mi Perfil</h2>
+        <form id="profileForm">
+          <label>Email</label>
+          <input type="email" id="profileEmail" required />
+          <label>Contraseña (opcional)</label>
+          <input
+            type="password"
+            id="profilePassword"
+            placeholder="Nueva contraseña"
+          />
+          <button type="submit">Actualizar Perfil</button>
+        </form>
+        <button id="deleteAccountBtn" class="danger">Eliminar mi cuenta</button>
+      </section>
+    </main>
+
+    <script src="./js/dashboard.js"></script>
+  </body>
+</html>

@@ -9,6 +9,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./docs/swagger-output.json");
+const path = require("path");
 
 // Importar rutas
 const authRoutes = require("./src/routes/auth");
@@ -20,13 +21,26 @@ const { verifyConnection } = require("./src/services/emailService");
 
 // Importar middleware (pendientes de implementar)
 const logger = require("./src/middleware/logger");
+const { verifyToken } = require("./src/middleware/auth");
 // const config = require('./src/config/config');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configuración de seguridad
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "https://cdn.jsdelivr.net", // 👈 añade esto
+        ],
+      },
+    },
+  })
+);
 
 const corsOptions = {
   origin: ["http://localhost:3000"],
@@ -48,6 +62,9 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware de logging
 app.use(logger.logRequest);
 app.use(logger.logError);
+
+// Archivos estáticos
+app.use(express.static(path.join(__dirname, "public")));
 
 // Rutas principales
 app.get("/", (req, res) => {
@@ -72,15 +89,29 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/password", passwordRoutes);
 
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "register.html"));
+});
+
+app.get("/forgot-password", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "forgot-password.html"));
+});
+
+app.get("/reset-password", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "reset-password.html"));
+});
+
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
+});
+
 // Ruta 404 - debe ir al final
 app.use((req, res) => {
-  res.status(404).json({
-    message: `La ruta ${req.originalUrl} no existe`,
-    data: {
-      method: req.method,
-      url: req.originalUrl,
-    },
-  });
+  res.status(404).sendFile(path.join(__dirname, "public", "not-found.html"));
 });
 
 // Iniciar servidor

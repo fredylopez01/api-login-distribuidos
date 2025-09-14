@@ -8,7 +8,12 @@ const {
 const { verifyToken, checkRole } = require("../middleware/auth");
 const { userRoles } = require("../models/User");
 
-router.post("/register", validateUserRegistration, userController.register);
+router.post(
+  "/register",
+  verifyToken,
+  validateUserRegistration,
+  userController.register
+);
 
 router.get("/profile", verifyToken, userController.getUserProfile);
 
