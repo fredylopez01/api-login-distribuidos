@@ -1,0 +1,98 @@
+[
+  {
+    "id": "0a37c205-dcc0-49b6-a08f-716dfc4e1230",
+    "email": "david@test.com",
+    "password": "$2b$10$1ZOMpH/RzWO1w0/4mWVQtOOgimKospil.rTbeW/8I6/pHYMPgqQ0W",
+    "role": "user",
+    "isActive": true,
+    "loginAttempts": 1,
+    "lastLogin": null,
+    "createdAt": "2025-09-07T18:22:15.707Z",
+    "updatedAt": "2025-09-07T22:31:47.022Z",
+    "lockUntil": null
+  },
+  {
+    "id": "68b141f7-2c6b-4c2d-aad8-7319b33d47f8",
+    "email": "david@tes1t.com",
+    "password": "$2b$10$DenNbygJZMmwHeADq7FqzOfF.VwjPkVtNYI/S0TfTbkA0I4KF7GRi",
+    "role": "user",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": null,
+    "createdAt": "2025-09-07T20:13:28.844Z",
+    "updatedAt": "2025-09-07T20:13:28.844Z",
+    "lockUntil": null
+  },
+  {
+    "id": "e916e748-27d8-4cdf-afa7-8630d27c6e2b",
+    "email": "fredy@example.com",
+    "password": "$2b$10$Lia0FezWstImQNKGeBlgYOAULmSwleD.6c/0mwSzWuxg8gwjHze0.",
+    "role": "admin",
+    "isActive": true,
+    "loginAttempts": 15,
+    "lastLogin": "2025-09-08T00:24:36.155Z",
+    "createdAt": "2025-09-07T21:58:46.205Z",
+    "updatedAt": "2025-09-08T00:30:30.524Z",
+    "lockUntil": "2025-09-08T00:45:30.527Z"
+  },
+  {
+    "id": "6b42e34a-8d9f-4749-bd0b-2ead7b2b243f",
+    "email": "santino1@ejemplo.com",
+    "password": "$2b$10$XQbyib15ojnJAf3DH2WOiuVhi7VE4/EtZ2fa516yRRx4yJ3q9qbTi",
+    "role": "user",
+    "isActive": true,
+    "loginAttempts": 2,
+    "lastLogin": null,
+    "createdAt": "2025-09-08T03:07:23.001Z",
+    "updatedAt": "2025-09-08T03:12:26.221Z",
+    "lockUntil": null
+  },
+  {
+    "id": "554045dc-5248-4b5f-af5f-e72d8231989f",
+    "email": "fredy.lopez04@uptc.edu.co",
+    "password": "$2b$10$l4WlPv2T/HW6fbqQwYf4muOTBGXX4NAZbWJnA/NkB8ky8yvp2Faqq",
+    "role": "admin",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": "2025-09-13T01:01:51.470Z",
+    "createdAt": "2025-09-08T02:06:42.022Z",
+    "updatedAt": "2025-09-13T01:01:51.470Z",
+    "lockUntil": null
+  },
+  {
+    "id": "703abdbe-06d0-4a4c-bcf7-3be2bb02393c",
+    "email": "lopezdaza@gmail.com",
+    "password": "$2b$10$rkj5qusuHhvdIwWDk9uSN.53lwt9LWFochp/7Od0v4n/VUrvCWdR2",
+    "role": "admin",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": null,
+    "createdAt": "2025-09-08T20:47:40.953Z",
+    "updatedAt": "2025-09-08T20:47:40.953Z",
+    "lockUntil": null
+  },
+  {
+    "id": "cd3ef16c-a38d-447f-9f4c-802ce6df7bfc",
+    "email": "fl8333317@gmail.com",
+    "password": "$2b$10$bzMk1TavhL7AakWoXupsteZiL2JEPMxHOsPnQ2zzUE1GNdEVNPb/q",
+    "role": "admin",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": "2025-09-13T01:17:27.703Z",
+    "createdAt": "2025-09-08T21:03:53.543Z",
+    "updatedAt": "2025-09-13T01:17:27.704Z",
+    "lockUntil": null
+  },
+  {
+    "id": "bd2fff72-ce53-4402-ab6a-3eccab4d7d24",
+    "email": "daniel.bermudez@uptc.edu.co",
+    "password": "$2b$10$8TSabljwbOYXECk3Hr9xbOsqApJJIlcnY732XG4Ctq3eRcC7R/kWC",
+    "role": "user",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": null,
+    "createdAt": "2025-09-12T23:18:39.048Z",
+    "updatedAt": "2025-09-12T23:18:39.048Z",
+    "lockUntil": null
+  }
+]

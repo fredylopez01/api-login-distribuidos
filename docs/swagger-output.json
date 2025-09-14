@@ -1,0 +1,308 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API de Login",
+    "description": "Sistema de login con roles, tokens y recuperación de contraseñas. Incluye autenticación JWT, gestión de usuarios y flujo de recuperación de contraseñas.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "tags": [
+    { "name": "Auth", "description": "Autenticación y manejo de sesiones" },
+    { "name": "Users", "description": "Gestión de usuarios y roles" },
+    {
+      "name": "Password",
+      "description": "Recuperación y cambio de contraseñas"
+    }
+  ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header usando el esquema Bearer. Ejemplo: \"Authorization: Bearer {token}\""
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login de usuario",
+        "description": "Autentica a un usuario con email y contraseña. Devuelve un JWT en caso de éxito.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["email", "password"],
+              "properties": {
+                "email": { "type": "string", "example": "user@example.com" },
+                "password": { "type": "string", "example": "mypassword123" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login exitoso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "token": { "type": "string" }
+              }
+            }
+          },
+          "400": { "description": "Datos de login inválidos" },
+          "401": { "description": "Credenciales inválidas" },
+          "500": { "description": "Error interno del servidor" }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Registro de usuario",
+        "description": "Crea un nuevo usuario en el sistema.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["email", "password"],
+              "properties": {
+                "email": { "type": "string", "example": "new@example.com" },
+                "password": { "type": "string", "example": "securePass123" },
+                "role": { "type": "string", "example": "user" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Usuario creado exitosamente" },
+          "400": { "description": "Datos inválidos" },
+          "409": { "description": "Usuario ya existente" },
+          "500": { "description": "Error interno del servidor" }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Obtener perfil de usuario",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Perfil obtenido correctamente" },
+          "401": { "description": "No autenticado" },
+          "404": { "description": "Usuario no encontrado" }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Actualizar perfil de usuario",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": { "type": "string", "example": "update@example.com" },
+                "role": { "type": "string", "example": "admin" },
+                "isActive": { "type": "boolean", "example": true }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Perfil actualizado correctamente" },
+          "400": { "description": "Datos inválidos" },
+          "401": { "description": "No autenticado" },
+          "404": { "description": "Usuario no encontrado" }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Eliminar usuario autenticado",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Usuario eliminado correctamente" },
+          "401": { "description": "No autenticado" },
+          "404": { "description": "Usuario no encontrado" }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Eliminar usuario por ID (solo admin)",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID del usuario a eliminar"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Usuario eliminado correctamente" },
+          "401": { "description": "No autenticado" },
+          "403": { "description": "Prohibido (requiere rol admin)" },
+          "404": { "description": "Usuario no encontrado" }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Listar todos los usuarios (solo admin)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de usuarios obtenida correctamente" },
+          "401": { "description": "No autenticado" },
+          "403": { "description": "Prohibido (requiere rol admin)" }
+        }
+      }
+    },
+    "/users/role/{role}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Listar usuarios por rol (solo admin)",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Rol de usuario (ej. admin, user)"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Usuarios obtenidos correctamente" },
+          "400": { "description": "Rol inválido" },
+          "401": { "description": "No autenticado" },
+          "403": { "description": "Prohibido (requiere rol admin)" }
+        }
+      }
+    },
+    "/password/forgot-password": {
+      "post": {
+        "tags": ["Password"],
+        "summary": "Solicitar recuperación de contraseña",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "required": ["email"],
+              "properties": {
+                "email": { "type": "string", "example": "user@example.com" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Si el email existe, se envía correo de recuperación"
+          },
+          "400": { "description": "Datos inválidos" },
+          "500": { "description": "Error al enviar el correo" }
+        }
+      }
+    },
+    "/password/reset-password": {
+      "post": {
+        "tags": ["Password"],
+        "summary": "Restablecer contraseña con token",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "required": ["email", "token", "newPassword"],
+              "properties": {
+                "email": { "type": "string", "example": "user@example.com" },
+                "token": { "type": "string", "example": "abc123token" },
+                "newPassword": { "type": "string", "example": "NewPass123!" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Contraseña restablecida correctamente" },
+          "400": { "description": "Token inválido o expirado" },
+          "404": { "description": "Usuario no encontrado" },
+          "500": { "description": "Error interno del servidor" }
+        }
+      }
+    },
+    "/password/change-password": {
+      "post": {
+        "tags": ["Password"],
+        "summary": "Cambiar contraseña (requiere login)",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "required": ["currentPassword", "newPassword"],
+              "properties": {
+                "currentPassword": {
+                  "type": "string",
+                  "example": "oldPass123"
+                },
+                "newPassword": { "type": "string", "example": "NewPass123!" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Contraseña cambiada correctamente" },
+          "400": {
+            "description": "Datos inválidos o contraseña actual incorrecta"
+          },
+          "401": { "description": "No autenticado" },
+          "500": { "description": "Error interno del servidor" }
+        }
+      }
+    },
+    "/password/validate-token": {
+      "post": {
+        "tags": ["Password"],
+        "summary": "Validar token de recuperación",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "required": ["email", "token"],
+              "properties": {
+                "email": { "type": "string", "example": "user@example.com" },
+                "token": { "type": "string", "example": "abc123token" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Token válido" },
+          "400": { "description": "Token inválido o expirado" },
+          "500": { "description": "Error interno del servidor" }
+        }
+      }
+    }
+  }
+}

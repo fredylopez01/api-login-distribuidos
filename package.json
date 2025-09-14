@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "swagger-autogen": "node swagger.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,18 @@
   },
   "homepage": "https://github.com/fredylopez01/api-login-distribuidos#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "nodemailer": "^7.0.6",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^8.3.2",
+    "validator": "^13.15.15"
   }
 }
