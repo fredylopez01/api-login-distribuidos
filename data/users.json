@@ -5,10 +5,10 @@
     "password": "$2b$10$1ZOMpH/RzWO1w0/4mWVQtOOgimKospil.rTbeW/8I6/pHYMPgqQ0W",
     "role": "user",
     "isActive": true,
-    "loginAttempts": 1,
+    "loginAttempts": 3,
     "lastLogin": null,
     "createdAt": "2025-09-07T18:22:15.707Z",
-    "updatedAt": "2025-09-07T22:31:47.022Z",
+    "updatedAt": "2025-11-09T22:59:49.791Z",
     "lockUntil": null
   },
   {
@@ -54,9 +54,9 @@
     "role": "admin",
     "isActive": true,
     "loginAttempts": 0,
-    "lastLogin": "2025-09-13T01:01:51.470Z",
+    "lastLogin": "2025-11-11T00:44:04.173Z",
     "createdAt": "2025-09-08T02:06:42.022Z",
-    "updatedAt": "2025-09-13T01:01:51.470Z",
+    "updatedAt": "2025-11-11T00:44:04.173Z",
     "lockUntil": null
   },
   {
@@ -65,22 +65,22 @@
     "password": "$2b$10$rkj5qusuHhvdIwWDk9uSN.53lwt9LWFochp/7Od0v4n/VUrvCWdR2",
     "role": "admin",
     "isActive": true,
-    "loginAttempts": 0,
+    "loginAttempts": 1,
     "lastLogin": null,
     "createdAt": "2025-09-08T20:47:40.953Z",
-    "updatedAt": "2025-09-08T20:47:40.953Z",
+    "updatedAt": "2025-11-11T03:01:45.873Z",
     "lockUntil": null
   },
   {
     "id": "cd3ef16c-a38d-447f-9f4c-802ce6df7bfc",
     "email": "fl8333317@gmail.com",
-    "password": "$2b$10$bzMk1TavhL7AakWoXupsteZiL2JEPMxHOsPnQ2zzUE1GNdEVNPb/q",
+    "password": "$2b$10$rb.h7IaPcREePKyGx1ee5ucIq0YEq1Gb3Ec3xZxeWSSvOsNZ3iB2W",
     "role": "admin",
     "isActive": true,
     "loginAttempts": 0,
-    "lastLogin": "2025-09-13T01:17:27.703Z",
+    "lastLogin": "2025-11-11T01:09:52.453Z",
     "createdAt": "2025-09-08T21:03:53.543Z",
-    "updatedAt": "2025-09-13T01:17:27.704Z",
+    "updatedAt": "2025-11-11T01:09:52.453Z",
     "lockUntil": null
   },
   {
@@ -93,6 +93,18 @@
     "lastLogin": null,
     "createdAt": "2025-09-12T23:18:39.048Z",
     "updatedAt": "2025-09-12T23:18:39.048Z",
+    "lockUntil": null
+  },
+  {
+    "id": "a64c65b6-5f5f-4e6c-ae4e-7fd6df2044d6",
+    "email": "lopezdazafredy@gmail.com",
+    "password": "$2b$10$aW7Hg/UsCpXnpdpifc64NemRK14F2JEWbu5qMJBFP2I7wrbgvKphK",
+    "role": "user",
+    "isActive": true,
+    "loginAttempts": 0,
+    "lastLogin": "2025-11-11T03:02:02.512Z",
+    "createdAt": "2025-11-10T21:59:00.628Z",
+    "updatedAt": "2025-11-11T03:02:02.512Z",
     "lockUntil": null
   }
 ]

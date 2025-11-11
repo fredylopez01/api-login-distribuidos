@@ -1,7 +1,5 @@
 // Cargar variables de entorno
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV || "development"}`,
-});
+require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
@@ -43,7 +41,7 @@ app.use(
 );
 
 const corsOptions = {
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", "http://localhost:5173"],
 };
 app.use(cors(corsOptions));
 
@@ -62,9 +60,6 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware de logging
 app.use(logger.logRequest);
 app.use(logger.logError);
-
-// Archivos estáticos
-app.use(express.static(path.join(__dirname, "public")));
 
 // Rutas principales
 app.get("/", (req, res) => {
@@ -89,40 +84,20 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/password", passwordRoutes);
 
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
-});
-
-app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "register.html"));
-});
-
-app.get("/forgot-password", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "forgot-password.html"));
-});
-
-app.get("/reset-password", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "reset-password.html"));
-});
-
-app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
-});
-
 // Ruta 404 - debe ir al final
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, "public", "not-found.html"));
+  res.status(404).json({ message: "Ruta no encontrada" });
 });
 
 // Iniciar servidor
 app.listen(PORT, async () => {
-  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-  console.log(`📍 URL: http://localhost:${PORT}`);
-  console.log(`🔧 Modo: ${process.env.NODE_ENV || "development"}`);
-  console.log("📝 API de Login lista para recibir requests");
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log(`URL: http://localhost:${PORT}`);
+  console.log(`Modo: ${process.env.NODE_ENV || "development"}`);
+  console.log("API de Login lista para recibir requests");
 
   // Verificar conexión de email
-  console.log("📧 Verificando servicio de email...");
+  console.log("Verificando servicio de email...");
   await verifyConnection();
 });
 
